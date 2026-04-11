@@ -184,6 +184,31 @@ This is the highest-signal data point in the entire research round. Ethan sent t
 
 **Nothing.** The current 18-query set is still the right probe when the pilot eventually runs. The GSC finding reshapes the sequencing (Phase -1 before Phase 0) rather than the query list.
 
+### Update 2026-04-11 (after Ethan's direct GSC investigation)
+
+Ethan identified the 4 "Redirect error" URLs in GSC:
+- `/ethan-cho`
+- `/concepts/four-lenses-framework`
+- `/concepts/optimism-tax`
+- `/korea-vc`
+
+And traced the root cause: the site lives at `https://www.ventureoracle.kr/` (www), but the verified GSC property is `https://ventureoracle.kr/` (non-www). The sitemap lists non-www URLs. Google follows the 301 from non-www to www successfully — pages serve fine and are almost certainly indexed — but the non-www property can't see them because the URL redirected out of the property.
+
+**This is a GSC property-mismatch artifact, not a real crawl failure.** The pages are likely retrievable by AI chat engines via the www hostname, just not visible in the non-www GSC property. To confirm: run `site:www.ventureoracle.kr` in Google Search, which bypasses the property boundary and shows what's actually indexed.
+
+**The correct fix is adding a Domain property via DNS verification** — a single action in GSC that covers both www and non-www and any subdomains. The Phase -1 deliverables section in the CEO plan has been rewritten to reflect this sharper diagnosis.
+
+Ethan has already:
+- Requested re-indexing on the 4 URLs
+- Clicked "Validate Fix" on the Redirect error and 404 reason rows (validation started 2026-04-11)
+- Confirmed the host-level redirect is standard non-www → www behavior, not a broken loop
+
+Still to do:
+- Add Domain property via DNS verification
+- Re-capture baseline (clicks, impressions, indexed page count) from the new Domain property
+- Fix the 1 remaining 404 (separate issue from the property mismatch)
+- Confirm pilot readiness against the new Domain property baseline
+
 ### Immediate action items for Ethan (pre-pilot)
 
 These are documented in full in `docs/designs/ceo-plan-2026-04-11.md` under the new "Phase -1 — Fix Indexing" block. Short version:

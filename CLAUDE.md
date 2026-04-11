@@ -14,18 +14,21 @@ Today's baseline (captured 2026-04-11):
 
 **Phase 0 — Manual Pilot.** No automation code yet. Gated on Phase -1 clearance. If you are being asked to write engine clients, classifiers, or launchd scripts *before* `pilot/assessment-2026-04-27.md` exists with a GO or PIVOT verdict AND Phase -1 has cleared, **stop and ask**. The entire point of Phase 0 is to validate the signal before committing to automation, and Phase -1 exists to ensure there IS a signal to validate.
 
-## Indexing is the root bottleneck (surfaced 2026-04-11 via GSC inspection)
+## Indexing context (revised 2026-04-11 after deeper GSC investigation)
 
-**Five of six ventureoracle.kr pages are not indexed by Google.** The root causes per Google's Pages report:
-- 4 pages: redirect errors (likely HTTP↔HTTPS or www↔non-www redirect loops)
-- 1 page: 404 Not Found
-- Both reason rows show "Validation: Not Started" — Ethan has not yet initiated Google's Validate Fix flow
+**Original finding (superseded):** 5 of 6 pages in the GSC `https://ventureoracle.kr/` property were flagged as not-indexed, 4 for "Redirect error" and 1 for 404.
 
-AI chat engines with web retrieval (Claude web_search, Perplexity, Gemini grounding, ChatGPT browsing) cannot cite content that does not exist in Google's index. This means the "zero citations" baseline the original PRD set out to measure is downstream of an indexing problem, NOT a pure AI-engine surfacing problem.
+**Sharpened finding:** The 4 "Redirect error" entries are a **GSC property-mismatch artifact**, not a real crawl failure. The site lives at `https://www.ventureoracle.kr/` (www). The existing GSC property is `https://ventureoracle.kr/` (non-www URL-prefix). The sitemap lists non-www URLs. Google correctly follows the 301 from non-www to www, pages serve fine, and the content is almost certainly already indexed under the www hostname — but the non-www property can't see it because the URL "left the property" via redirect.
 
-**Before running the Phase 0 pilot**, the priority is Phase -1 (documented in `docs/designs/ceo-plan-2026-04-11.md`): fix the 4 redirect errors, fix the 1 404, validate fix in GSC, manually request indexing on key pages, submit sitemap, then wait for at least 10 indexed pages before starting Phase 0.
+**The real fix:** Add a **Domain property via DNS verification** in GSC. This single action covers `https://www.*`, `https://*`, `http://*`, and any future subdomains — and makes the sitemap URL form irrelevant. Google's 2022+ guidance recommends Domain properties as the default for production sites. Details in `docs/designs/ceo-plan-2026-04-11.md` → "Phase -1 deliverables (REVISED)".
 
-When working in this repo, prefer actions that unblock indexing over actions that build automation. Code for the tracker is premature if GSC shows <10 indexed pages.
+**The 1 page 404 is still a real issue** and should be fixed separately (restore, redirect, or remove from sitemap) regardless of the property fix.
+
+**When working in this repo:**
+- Phase 0 pilot is gated on the **Domain property** showing ≥10 indexed pages, NOT the non-www URL-prefix property
+- Prefer actions that unblock indexing over actions that build automation
+- Code for the tracker remains premature until the Domain property baseline is captured
+- If you're asked "is the site indexed?", the authoritative check is `site:www.ventureoracle.kr` in Google Search, not the non-www GSC property
 
 ## Known reputational indexing risk (surfaced 2026-04-11 during demand seeding)
 
