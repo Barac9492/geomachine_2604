@@ -14,11 +14,9 @@
 | **Bing autocomplete API** (`/osjson.aspx`) | ✅ Yes | Same-origin from a Bing results page, no auth needed. 12 seed queries tested. |
 | **Bing search results** | ✅ Yes | Standard results for qualitative context. |
 | **Claude WebSearch web-corpus pass** | ✅ Yes | 6 parallel queries against general web for corpus context. |
-| Google Search Console | ❌ No | Chrome session not signed into Google. Would require Ethan's interactive login. |
-| LinkedIn search auto-complete | ❌ No | Hit LinkedIn login wall. Would require Ethan's interactive login. |
+| **Google Search Console** (via user screenshots) | ✅ Yes | Ethan sent 2 screenshots from his signed-in personal browser. Overview + Performance + Pages reports captured. See Source 5 below — this is the highest-value data in the entire seeding round. |
+| LinkedIn search auto-complete | ❌ No | Automation browser hit LinkedIn login wall. User did not paste data. Still TBD if needed. |
 | Google Search (direct) | ❌ No | CAPTCHA rate-limit (Google sorry page). Automation detected. |
-
-Worth revisiting if Ethan signs into Chrome for Google/LinkedIn later.
 
 ---
 
@@ -127,6 +125,86 @@ Bing autocomplete flagged `더벤처스 사건` as the #2 suggestion for `더벤
 
 ---
 
+## Source 5 — Google Search Console live data (via user screenshots, 2026-04-11)
+
+This is the highest-signal data point in the entire research round. Ethan sent two screenshots from his signed-in personal Chrome browser of the GSC property `https://ventureoracle.kr/` (URL-prefix type).
+
+### GSC Performance report — 3-month window
+
+| Metric | Value |
+|---|---|
+| Total clicks from Google Search | **1** |
+| Total impressions | **42** (~0.5/day) |
+| Average CTR | 2.4% |
+| Average position | **4.6** (strong when shown) |
+| Rows in top-queries table | **1** |
+| Only query shown | **`oracle ventures`** — 0 clicks, 2 impressions |
+
+### GSC Pages (Indexing) report — current state
+
+| Status | Count |
+|---|---|
+| Indexed pages | **1** |
+| Not indexed pages | **5** |
+
+### Why pages aren't indexed — exact reasons (2 reasons, 3 rows)
+
+| Reason | Source | Validation status | Pages |
+|---|---|---|---|
+| Redirect error | Website | **Not Started** | **4** |
+| Not found (404) | Website | **Not Started** | **1** |
+| Discovered - currently not indexed | Google systems | N/A | 0 (historical peak ~35-40 around 2026-03-07) |
+
+### Historical timeline (from the Pages report chart)
+
+1. **~2026-02-24** — GSC property began collecting data (annotation "1" on the chart)
+2. **~2026-03-07** — sitemap submission or URL dump caused Google to discover ~35-40 pages (annotation "2"; the grey-bar spike)
+3. **2026-03-07 onwards** — Google crawled, hit redirect loops + 404s, rejected most
+4. **Present** — 5 stubborn unindexed pages remain (4 redirect errors + 1 404), validation "Not Started" on both reason rows
+
+### The real story this tells
+
+**Indexing is the root bottleneck, upstream of both measurement and content.**
+
+- The site has ~6 known pages and only 1 is successfully indexed.
+- 4 pages are blocked by redirect errors — almost certainly HTTP↔HTTPS or www↔non-www redirect loops, or canonical tags pointing through a redirect chain.
+- 1 page is a plain 404 (broken link or removed page still referenced somewhere).
+- Average position is 4.6 when the site DOES appear — **this is not a ranking problem**. It's a **demand-fit problem plus an indexing problem**.
+- Only query that ever surfaced the site: `oracle ventures` — a reversed-word-order version of the brand. This suggests Google's 1 indexed page may contain text with words in this order, and real demand for "venture oracle" phrased as "oracle ventures" is near-zero.
+- **Zero searches for "Ethan Cho", "TheVentures", or any framework name** have ever surfaced ventureoracle.kr in Google Search over the 3-month window.
+
+### Implications for the pilot
+
+1. **The Phase 0 pilot as designed will almost certainly return 72/72 zero citations**, not because engines aren't good at surfacing but because there's nothing in the web-retrieval index for them to surface. AI chat engines with web retrieval depend on Google (or similar) indexes.
+2. **The sharp diagnostic opportunity** is Pages report + URL Inspection, not the citation tracker. Fix the 4 redirect errors + 1 404, request indexing, wait for Google to recrawl, then re-measure.
+3. **The Phase 0 pilot becomes informative** once indexed page count reaches ~10+. Before that, running it is essentially measuring an uncrawled site.
+4. **The "oracle ventures" query is itself a finding worth keeping.** It confirms the site has at minimum ONE page that's discoverable, and Google is matching it to a typo/reversed-word-order search. That's a tiny, unreliable, but non-zero toehold.
+
+### What gets added to `queries.yaml`
+
+**Nothing.** The current 18-query set is still the right probe when the pilot eventually runs. The GSC finding reshapes the sequencing (Phase -1 before Phase 0) rather than the query list.
+
+### Immediate action items for Ethan (pre-pilot)
+
+These are documented in full in `docs/designs/ceo-plan-2026-04-11.md` under the new "Phase -1 — Fix Indexing" block. Short version:
+
+1. In GSC, click the "Redirect error" row. Get the 4 specific URLs.
+2. For each URL, use URL Inspection to see the redirect chain Google hit. Fix the loops (pick one canonical form and 301 everything else directly to it).
+3. Click the "Not found (404)" row. Restore, redirect, or remove-from-sitemap the 1 URL.
+4. Click "Validate Fix" on both reason rows after repair.
+5. Manually request indexing (via URL Inspection top bar) on 3-5 key pages.
+6. Submit `sitemap.xml` at Indexing → Sitemaps.
+7. Check Settings → Manual Actions (10 seconds).
+8. Publish content to reach ≥10 indexed pages before starting Phase 0 pilot.
+
+### What was intentionally NOT extracted
+
+- LinkedIn auto-complete data (Ethan didn't paste it; marked as optional)
+- Google Search direct (CAPTCHA blocked the automation browser)
+- Deeper GSC drill-downs (per-page inspection, sitemap history) — deferred until Ethan has the Pages list in hand
+
+---
+
 ## Source 4 — Claude WebSearch corpus pass (context-only)
 
 6 parallel queries against the general web provided qualitative context (already documented in the earlier CEO review section). Key reusable findings:
@@ -140,7 +218,8 @@ Bing autocomplete flagged `더벤처스 사건` as the #2 suggestion for `더벤
 
 ## Next steps
 
-1. Queries committed to `pilot/queries.yaml` — 18 total, 9 Ethan-authored + 9 demand-seeded. Ready for Monday 2026-04-13 first pilot run.
-2. Re-run this research if/when Ethan signs into Chrome for Google (for GSC data) and LinkedIn (for auto-complete). The current seed is strong but missing those two auth-gated sources.
+1. Queries committed to `pilot/queries.yaml` — 18 total, 9 Ethan-authored + 9 demand-seeded.
+2. **Pilot start is now gated on Phase -1 (indexing fix).** See `docs/designs/ceo-plan-2026-04-11.md` → "Phase -1 — Fix Indexing" for the full gating criteria. Minimum: ≥10 indexed pages in GSC before running the 2-week manual pilot.
 3. Keep the Naver screenshot (`pilot/naver_datalab_2026-04-11.png`) as a visual anchor for the week-2 assessment.
-4. **Treat `dm-003` and `dm-004` as the two highest-information queries of the pilot.** Their results directly test the 2016 indexing-decay hypothesis. Flag them for close reading in the week-2 assessment.
+4. **Treat `dm-003` and `dm-004` as the two highest-information queries of the pilot.** Their results directly test the 2016 indexing-decay hypothesis. Flag them for close reading in the week-2 assessment (whenever it runs).
+5. **The GSC baseline (1 click, 42 impressions, 1 indexed page, 5 not indexed, 2.4% CTR, 4.6 avg position, only `oracle ventures` query)** is now the permanent "Day 0" measurement for Ethan's GEO strategy. Record the same numbers again at Phase 0 start, Phase 0 week 2, and the Q3 2026 quarterly retrospective to measure progress against this baseline.

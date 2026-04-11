@@ -1,7 +1,7 @@
 # GEO Tracker (GEOMachine)
 
 **Owner:** Ethan Cho, CIO, TheVentures
-**Status:** Phase 0 — Manual Pilot
+**Status:** **Phase -1 — Fix Indexing** (Phase 0 manual pilot gated on this)
 **Started:** 2026-04-11
 
 ---
@@ -12,15 +12,35 @@ A personal instrument for measuring whether the AI engines (ChatGPT, Claude, Per
 
 Not a product. Not a platform. The instrument that makes the GEO strategy measurable, the content credible, and the eventual SaaS (if it ever ships) defensible.
 
-## Current phase — Phase 0 manual pilot
+## Current phase — Phase -1, fix indexing
 
-Before any automation is built, this project runs **2 weeks of manual collection** to validate that the signal is worth automating.
+**Today's state (2026-04-11 GSC baseline):**
+- 1 indexed page, 5 not indexed (4 redirect errors + 1 404)
+- 1 total click and 42 impressions from Google Search over the last 3 months
+- Only one query has ever surfaced ventureoracle.kr in Google: `oracle ventures` (reversed brand name, 0 clicks)
+- Core Web Vitals: insufficient traffic to compute
 
-- **Week 1:** Monday 2026-04-13, ~20 minutes
-- **Week 2:** Monday 2026-04-20, ~20 minutes
-- **Go/no-go decision:** Monday 2026-04-27
+**Why this blocks everything downstream:** AI chat engines with web retrieval (Claude web_search, Perplexity, Gemini grounding, ChatGPT browsing) can only cite pages that exist in Google's index. With 5 of 6 pages rejected, the citation tracker (Phase 0) would measure a site that is essentially invisible to the engines it's designed to query.
 
-The pilot exists because the multi-section CEO review surfaced that the cheapest version of this tool is Ethan manually pasting 18 queries into 4 chat UIs and logging to a sheet. If 2 weeks of manual checking shows zero variance across the board, the bottleneck is *content*, not *measurement* — and the 4-6 hours of Claude Code build time should go into writing instead.
+**Phase -1 deliverables (before Phase 0 starts):**
+1. Fix the 4 redirect errors in GSC → Indexing → Pages
+2. Fix the 1 404
+3. Click "Validate Fix" on both reason rows
+4. Manually request indexing on 3-5 key pages via URL Inspection
+5. Submit sitemap.xml
+6. Publish content until ≥10 pages are indexed
+
+Full diagnosis, action list, and gating criteria in `docs/designs/ceo-plan-2026-04-11.md` → "Phase -1 — Fix Indexing" block.
+
+## Phase 0 manual pilot — gated on Phase -1 clearance
+
+When Phase -1 clears (≥10 indexed pages), Phase 0 runs as originally scoped: 2 weeks of manual collection against the 18 locked queries in `pilot/queries.yaml`.
+
+- **Week 1:** Monday ~, ~20 minutes (date TBD based on Phase -1 completion)
+- **Week 2:** Monday ~, ~20 minutes
+- **Go/no-go decision:** Monday ~ (2 weeks after week 1)
+
+The pilot exists because the multi-section CEO review surfaced that the cheapest version of this tool is Ethan manually pasting 18 queries into 4 chat UIs and logging to a sheet. Running it before indexing is fixed would produce predictable zero-signal noise.
 
 See `docs/designs/ceo-plan-2026-04-11.md` for the full review record, rationale, and Phase 1 automation scope (applicable only if Phase 0 returns GO or PIVOT).
 

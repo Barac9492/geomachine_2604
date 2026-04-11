@@ -4,7 +4,28 @@ Hand-off notes for any Claude Code session working on this repo.
 
 ## Project phase
 
-**Phase 0 — Manual Pilot.** No automation code yet. If you are being asked to write engine clients, classifiers, or launchd scripts *before* `pilot/assessment-2026-04-27.md` exists with a GO or PIVOT verdict, **stop and ask**. The entire point of Phase 0 is to validate the signal before committing to automation.
+**Phase -1 — Fix Indexing.** Added 2026-04-11 after direct GSC inspection revealed only 1 of 6 ventureoracle.kr pages is indexed by Google and the only query surfacing the site in 3 months is `oracle ventures` (reversed brand name, 0 clicks). The citation tracker (Phase 0 pilot) is gated on at least 10 indexed pages in GSC.
+
+Today's baseline (captured 2026-04-11):
+- 1 indexed page, 5 not-indexed pages
+- 4 pages blocked by redirect errors, 1 by 404
+- 1 click and 42 impressions in 3 months
+- Core Web Vitals: no data (insufficient traffic)
+
+**Phase 0 — Manual Pilot.** No automation code yet. Gated on Phase -1 clearance. If you are being asked to write engine clients, classifiers, or launchd scripts *before* `pilot/assessment-2026-04-27.md` exists with a GO or PIVOT verdict AND Phase -1 has cleared, **stop and ask**. The entire point of Phase 0 is to validate the signal before committing to automation, and Phase -1 exists to ensure there IS a signal to validate.
+
+## Indexing is the root bottleneck (surfaced 2026-04-11 via GSC inspection)
+
+**Five of six ventureoracle.kr pages are not indexed by Google.** The root causes per Google's Pages report:
+- 4 pages: redirect errors (likely HTTP↔HTTPS or www↔non-www redirect loops)
+- 1 page: 404 Not Found
+- Both reason rows show "Validation: Not Started" — Ethan has not yet initiated Google's Validate Fix flow
+
+AI chat engines with web retrieval (Claude web_search, Perplexity, Gemini grounding, ChatGPT browsing) cannot cite content that does not exist in Google's index. This means the "zero citations" baseline the original PRD set out to measure is downstream of an indexing problem, NOT a pure AI-engine surfacing problem.
+
+**Before running the Phase 0 pilot**, the priority is Phase -1 (documented in `docs/designs/ceo-plan-2026-04-11.md`): fix the 4 redirect errors, fix the 1 404, validate fix in GSC, manually request indexing on key pages, submit sitemap, then wait for at least 10 indexed pages before starting Phase 0.
+
+When working in this repo, prefer actions that unblock indexing over actions that build automation. Code for the tracker is premature if GSC shows <10 indexed pages.
 
 ## Known reputational indexing risk (surfaced 2026-04-11 during demand seeding)
 
