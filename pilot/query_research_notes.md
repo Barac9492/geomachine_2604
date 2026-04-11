@@ -209,6 +209,46 @@ Still to do:
 - Fix the 1 remaining 404 (separate issue from the property mismatch)
 - Confirm pilot readiness against the new Domain property baseline
 
+### Update 2026-04-11 (same day) — root cause fixed at source, Phase -1 resolved
+
+Ethan went upstream and fixed it in the Next.js codebase:
+- `sitemap.ts` baseUrl changed from `https://ventureoracle.kr` → `https://www.ventureoracle.kr`
+- `robots.ts` sitemap reference updated to match
+- All 40 sitemap URLs now canonical www
+- Committed to main, auto-deployed by Vercel
+- Sitemap resubmitted in GSC, re-indexing requested, validation started
+
+### DuckDuckGo diagnostic (2026-04-11)
+
+Ran `site:www.ventureoracle.kr` and `site:ventureoracle.kr -site:www.ventureoracle.kr` on DuckDuckGo (which draws its web index from Bing and bypasses the GSC property boundary entirely).
+
+**Results:**
+- `site:www.ventureoracle.kr` → 8+ indexed pages visible on the first results page
+- `site:ventureoracle.kr -site:www.ventureoracle.kr` → **zero results** (nothing stranded under non-www)
+
+**Live pages confirmed indexed:**
+
+| Path | Title |
+|---|---|
+| `/` | VentureOracle - The Investor Who Predicted Korea's Unicorns \| Ethan Cho |
+| `/predictions` | Predictions - What The Oracle Sees Next \| VentureOracle |
+| `/about/ethan-cho` | About Ethan Cho (조여준) - CIO at TheVentures \| VentureOracle |
+| `/speaking` | Speaking - Book Ethan Cho for Keynotes & Panels \| VentureOracle |
+| `/tools` | Ethan Cho - Tools - VentureOracle |
+| `/concepts/mau-trap` | MAU Trap - Investment Framework by Ethan Cho \| VentureOracle |
+| `/concepts/private-credit-ai` | AI's $1.6 Trillion Target: Why Private Credit Is the Next Sector |
+| (Key Concepts landing) | Key Concepts - Original Investment Frameworks \| VentureOracle |
+
+### Implications for the pilot
+
+1. **Phase -1 is done.** The site is retrievable. Phase 0 pilot is cleared to start Monday 2026-04-13 with the 18 queries already in `pilot/queries.yaml`.
+2. **The pilot now has a fair chance of producing signal.** Framework queries (fr-003 for MAU Trap especially) have real landing pages with Ethan-authored titles to retrieve. Identity queries have a real `/about/ethan-cho` page. Brand queries have a homepage with the "Investor Who Predicted Korea's Unicorns" positioning.
+3. **Two new content angles were surfaced that the PRD didn't mention:**
+   - **`/predictions` page** claims Ethan called Toss and Dunamu as unicorns before they were. That's a verifiable track record narrative — potentially stronger GEO material than framework names for the first wave of citations.
+   - **`/concepts/private-credit-ai`** is a fresh topical piece on "AI's $1.6 Trillion Target". Recent content that might surface for private-credit-in-AI queries.
+4. **The 2016 TIPS fraud case risk is still live.** Indexing being healthy doesn't address the content balance — older negative content still exists in the corpus. `dm-003` and `dm-004` remain the highest-information pilot probes.
+5. **The demand-side problem is still real.** The Performance report showed 1 click in 3 months regardless of indexing state. Fixing indexing doesn't create demand; it just lets existing demand surface the site. The next phase of the GEO strategy (after the pilot) has to include content that matches actual demand vocabulary — the Naver / Bing autocomplete findings from Source 1 and Source 2 remain the demand roadmap.
+
 ### Immediate action items for Ethan (pre-pilot)
 
 These are documented in full in `docs/designs/ceo-plan-2026-04-11.md` under the new "Phase -1 — Fix Indexing" block. Short version:

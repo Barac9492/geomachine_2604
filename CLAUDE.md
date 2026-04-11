@@ -4,31 +4,30 @@ Hand-off notes for any Claude Code session working on this repo.
 
 ## Project phase
 
-**Phase -1 — Fix Indexing.** Added 2026-04-11 after direct GSC inspection revealed only 1 of 6 ventureoracle.kr pages is indexed by Google and the only query surfacing the site in 3 months is `oracle ventures` (reversed brand name, 0 clicks). The citation tracker (Phase 0 pilot) is gated on at least 10 indexed pages in GSC.
+**Phase 0 — Manual Pilot** (starts Monday 2026-04-13). No automation code yet. If you are being asked to write engine clients, classifiers, or launchd scripts *before* `pilot/assessment-2026-04-27.md` exists with a GO or PIVOT verdict, **stop and ask**. The entire point of Phase 0 is to validate the signal before committing to automation.
 
-Today's baseline (captured 2026-04-11):
-- 1 indexed page, 5 not-indexed pages
-- 4 pages blocked by redirect errors, 1 by 404
-- 1 click and 42 impressions in 3 months
-- Core Web Vitals: no data (insufficient traffic)
+**Phase -1 — Fix Indexing** was opened and closed on 2026-04-11 within hours. What looked like a critical indexing crisis (1 of 6 pages indexed, 5 "Redirect error") turned out to be a GSC property-mismatch artifact. The site lives at `www.ventureoracle.kr`; the verified GSC property was non-www; the sitemap referenced non-www URLs. Ethan fixed the root cause at the Next.js source (`sitemap.ts` and `robots.ts` baseUrl → www), committed, Vercel auto-deployed. DuckDuckGo `site:` diagnostic confirmed 8+ pages indexed under the www hostname. Google's GSC view will catch up over 1-28 days as Googlebot recrawls. See `docs/designs/ceo-plan-2026-04-11.md` → "Phase -1 — Fix Indexing" for the full record.
 
-**Phase 0 — Manual Pilot.** No automation code yet. Gated on Phase -1 clearance. If you are being asked to write engine clients, classifiers, or launchd scripts *before* `pilot/assessment-2026-04-27.md` exists with a GO or PIVOT verdict AND Phase -1 has cleared, **stop and ask**. The entire point of Phase 0 is to validate the signal before committing to automation, and Phase -1 exists to ensure there IS a signal to validate.
+## Indexing history (for future sessions — resolved 2026-04-11, keep as context)
 
-## Indexing context (revised 2026-04-11 after deeper GSC investigation)
+**What it looked like:** GSC (non-www property) showed 1 of 6 pages indexed, 4 flagged "Redirect error", 1 flagged 404, 1 click and 42 impressions in 3 months, and the only query surfacing the site was `oracle ventures` (reversed brand name).
 
-**Original finding (superseded):** 5 of 6 pages in the GSC `https://ventureoracle.kr/` property were flagged as not-indexed, 4 for "Redirect error" and 1 for 404.
+**What it actually was:** A property-mismatch artifact. Site lives at `www.ventureoracle.kr`; verified GSC property was non-www URL-prefix; sitemap listed non-www URLs. Google followed the 301 from non-www to www correctly — pages served fine, content was indexed under the www hostname — but the non-www property couldn't see them because the URLs redirected out of its namespace.
 
-**Sharpened finding:** The 4 "Redirect error" entries are a **GSC property-mismatch artifact**, not a real crawl failure. The site lives at `https://www.ventureoracle.kr/` (www). The existing GSC property is `https://ventureoracle.kr/` (non-www URL-prefix). The sitemap lists non-www URLs. Google correctly follows the 301 from non-www to www, pages serve fine, and the content is almost certainly already indexed under the www hostname — but the non-www property can't see it because the URL "left the property" via redirect.
+**How it was fixed:** Ethan updated `sitemap.ts` and `robots.ts` in the Next.js project so both point at `https://www.ventureoracle.kr` instead of the non-www version. All 40 sitemap URLs now canonical www. Committed to main, Vercel auto-deployed, GSC re-indexing requested, validation started 2026-04-11.
 
-**The real fix:** Add a **Domain property via DNS verification** in GSC. This single action covers `https://www.*`, `https://*`, `http://*`, and any future subdomains — and makes the sitemap URL form irrelevant. Google's 2022+ guidance recommends Domain properties as the default for production sites. Details in `docs/designs/ceo-plan-2026-04-11.md` → "Phase -1 deliverables (REVISED)".
+**Confirmed healthy (via DuckDuckGo diagnostic, same day):**
+- `site:www.ventureoracle.kr` returns 8+ indexed pages including `/`, `/predictions`, `/about/ethan-cho`, `/speaking`, `/tools`, `/concepts/mau-trap`, `/concepts/private-credit-ai`
+- `site:ventureoracle.kr -site:www.ventureoracle.kr` returns zero results (nothing stranded under non-www)
+- DuckDuckGo draws from Bing; AI chat engines with Bing-backed web retrieval (Perplexity, ChatGPT browsing, Bing Chat) can already reach the site
 
-**The 1 page 404 is still a real issue** and should be fixed separately (restore, redirect, or remove from sitemap) regardless of the property fix.
+**Still open as housekeeping but not blocking:**
+- The 1 remaining 404 page (1 URL of 40, low priority)
+- Optional Domain property via DNS verification for cleaner GSC tracking
+- Google's GSC view will catch up over 1-28 days as Googlebot recrawls the fixed sitemap
+- The 2016 TIPS fraud case reputational-indexing risk remains relevant — separate finding, unrelated to this fix
 
-**When working in this repo:**
-- Phase 0 pilot is gated on the **Domain property** showing ≥10 indexed pages, NOT the non-www URL-prefix property
-- Prefer actions that unblock indexing over actions that build automation
-- Code for the tracker remains premature until the Domain property baseline is captured
-- If you're asked "is the site indexed?", the authoritative check is `site:www.ventureoracle.kr` in Google Search, not the non-www GSC property
+**What to do if a future session is asked "is the site indexed?":** Don't trust the non-www GSC property. Run `site:www.ventureoracle.kr` on Google or DuckDuckGo instead. That's the authoritative view.
 
 ## Known reputational indexing risk (surfaced 2026-04-11 during demand seeding)
 

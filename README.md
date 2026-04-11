@@ -1,7 +1,7 @@
 # GEO Tracker (GEOMachine)
 
 **Owner:** Ethan Cho, CIO, TheVentures
-**Status:** **Phase -1 — Fix Indexing** (Phase 0 manual pilot gated on this)
+**Status:** **Phase 0 — Manual Pilot** cleared to start Mon 2026-04-13 (Phase -1 resolved same-day)
 **Started:** 2026-04-11
 
 ---
@@ -12,35 +12,31 @@ A personal instrument for measuring whether the AI engines (ChatGPT, Claude, Per
 
 Not a product. Not a platform. The instrument that makes the GEO strategy measurable, the content credible, and the eventual SaaS (if it ever ships) defensible.
 
-## Current phase — Phase -1, fix indexing
+## Phase -1 — indexing fix (CLEARED 2026-04-11)
 
-**Today's state (2026-04-11 GSC baseline):**
-- 1 indexed page, 5 not indexed (4 redirect errors + 1 404)
-- 1 total click and 42 impressions from Google Search over the last 3 months
-- Only one query has ever surfaced ventureoracle.kr in Google: `oracle ventures` (reversed brand name, 0 clicks)
-- Core Web Vitals: insufficient traffic to compute
+An earlier version of this README described a critical indexing problem based on GSC's non-www property showing 5 of 6 pages not indexed. **That turned out to be a GSC property-mismatch artifact.** The site lives at `www.ventureoracle.kr` (www). The verified GSC property was `ventureoracle.kr` (non-www URL-prefix). The sitemap listed non-www URLs. Google followed the 301 from non-www to www successfully — pages served fine — but the non-www property couldn't see them because the URLs redirected out of its namespace.
 
-**Why this blocks everything downstream:** AI chat engines with web retrieval (Claude web_search, Perplexity, Gemini grounding, ChatGPT browsing) can only cite pages that exist in Google's index. With 5 of 6 pages rejected, the citation tracker (Phase 0) would measure a site that is essentially invisible to the engines it's designed to query.
+**Fix landed at the source:** `sitemap.ts` and `robots.ts` in the Next.js project were updated to reference `https://www.ventureoracle.kr`. All 40 sitemap URLs now point directly to the www hostname. Committed to main, auto-deployed by Vercel. GSC re-indexing requested, validation started 2026-04-11.
 
-**Phase -1 deliverables (before Phase 0 starts):**
-1. Fix the 4 redirect errors in GSC → Indexing → Pages
-2. Fix the 1 404
-3. Click "Validate Fix" on both reason rows
-4. Manually request indexing on 3-5 key pages via URL Inspection
-5. Submit sitemap.xml
-6. Publish content until ≥10 pages are indexed
+**Confirmation via DuckDuckGo diagnostic (2026-04-11):**
+- `site:www.ventureoracle.kr` → 8+ indexed pages including `/`, `/predictions`, `/about/ethan-cho`, `/speaking`, `/tools`, `/concepts/mau-trap`, `/concepts/private-credit-ai`, and the Key Concepts landing
+- `site:ventureoracle.kr -site:www.ventureoracle.kr` → zero results (nothing stranded under non-www)
+- DuckDuckGo draws from Bing, which powers web retrieval for Perplexity, ChatGPT browsing, and Bing Chat. Site IS retrievable by those engines.
 
-Full diagnosis, action list, and gating criteria in `docs/designs/ceo-plan-2026-04-11.md` → "Phase -1 — Fix Indexing" block.
+**Outstanding post-Phase-1 housekeeping (not blocking anything):**
+- Fix the 1 remaining 404 page (1 URL of 40, low priority)
+- Optionally add a Domain property via DNS verification for cleaner GSC tracking going forward
+- Wait for Google's GSC view to catch up over the coming 1-28 days as Googlebot recrawls
 
-## Phase 0 manual pilot — gated on Phase -1 clearance
+Full record in `docs/designs/ceo-plan-2026-04-11.md` → "Phase -1 — Fix Indexing" block.
 
-When Phase -1 clears (≥10 indexed pages), Phase 0 runs as originally scoped: 2 weeks of manual collection against the 18 locked queries in `pilot/queries.yaml`.
+## Phase 0 manual pilot — cleared to start
 
-- **Week 1:** Monday ~, ~20 minutes (date TBD based on Phase -1 completion)
-- **Week 2:** Monday ~, ~20 minutes
-- **Go/no-go decision:** Monday ~ (2 weeks after week 1)
+- **Week 1:** Monday **2026-04-13**, ~20 minutes
+- **Week 2:** Monday **2026-04-20**, ~20 minutes
+- **Go/no-go decision:** Monday **2026-04-27**
 
-The pilot exists because the multi-section CEO review surfaced that the cheapest version of this tool is Ethan manually pasting 18 queries into 4 chat UIs and logging to a sheet. Running it before indexing is fixed would produce predictable zero-signal noise.
+18 queries locked in `pilot/queries.yaml`. 9 Ethan-authored (identity + framework) + 9 demand-seeded (from Naver DataLab, Bing autocomplete, and the Korean VC corpus). Run them manually each Monday, log to a new `pilot/logs/run-YYYY-MM-DD.md` using `pilot/pilot_log_template.md`, then the week-2 assessment triggers the GO / NO-GO / PIVOT decision on whether to build automation.
 
 See `docs/designs/ceo-plan-2026-04-11.md` for the full review record, rationale, and Phase 1 automation scope (applicable only if Phase 0 returns GO or PIVOT).
 
