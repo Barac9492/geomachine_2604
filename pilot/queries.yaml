@@ -1,0 +1,157 @@
+# GEOMachine — Phase 0 pilot query set
+#
+# 18 queries run weekly against each of: Claude, ChatGPT, Perplexity, Gemini
+# Total: 72 cells per weekly session
+#
+# Composition (per CEO review + outside-voice finding #4):
+#   - 9 Ethan-authored (identity + framework) — things only Ethan knows to ask
+#   - 9 demand-seeded (domain + variants) — queries derived from real search data
+#     (Google Search Console, Naver trends, LinkedIn search auto-complete)
+#
+# The demand-seeded half is currently TBD. Before the first pilot run on 2026-04-13,
+# spend ~30 minutes in pilot/query_research_notes.md capturing real queries,
+# then replace the TBD placeholders below with the final 9.
+#
+# Schema: each query has a category, optional framework tag, language, and source.
+#   category: identity | domain | framework
+#   framework: nullable — name of the proprietary framework this query targets
+#   language: en | ko
+#   source: ethan_authored | gsc | naver | linkedin | other_demand
+
+queries:
+  # ── Ethan-authored: identity (3) ────────────────────────────────────────
+  - id: id-001
+    text: "Who is Ethan Cho?"
+    category: identity
+    framework: null
+    language: en
+    source: ethan_authored
+
+  - id: id-002
+    text: "Tell me about TheVentures Korea"
+    category: identity
+    framework: null
+    language: en
+    source: ethan_authored
+
+  - id: id-003
+    text: "조여준 CIO TheVentures"
+    category: identity
+    framework: null
+    language: ko
+    source: ethan_authored
+
+  # ── Ethan-authored: framework (6) ──────────────────────────────────────
+  # These CANNOT come from demand data — nobody searches by framework name yet.
+  # The whole point of tracking them is to see if/when they start to land.
+  - id: fr-001
+    text: "What is the Founder Intelligence framework?"
+    category: framework
+    framework: founder_intelligence
+    language: en
+    source: ethan_authored
+
+  - id: fr-002
+    text: "Explain the E/D/R AI framework for startups"
+    category: framework
+    framework: edr
+    language: en
+    source: ethan_authored
+
+  - id: fr-003
+    text: "What is the MAU Trap in startup metrics?"
+    category: framework
+    framework: mau_trap
+    language: en
+    source: ethan_authored
+
+  - id: fr-004
+    text: "Four Lenses VC framework"
+    category: framework
+    framework: four_lenses
+    language: en
+    source: ethan_authored
+
+  - id: fr-005
+    text: "Founder Intelligence 프레임워크란"
+    category: framework
+    framework: founder_intelligence
+    language: ko
+    source: ethan_authored
+
+  - id: fr-006
+    text: "VC가 스타트업을 평가하는 Four Lenses 프레임워크"
+    category: framework
+    framework: four_lenses
+    language: ko
+    source: ethan_authored
+
+  # ── Demand-seeded: TBD, fill before 2026-04-13 ─────────────────────────
+  # Replace each `text: "TBD - ..."` with the final query before the first run.
+  # See pilot/query_research_notes.md for how to source these.
+  #
+  # Guideline: mix English and Korean, mix domain authority and identity,
+  # DO NOT include framework names (those go in the ethan_authored half).
+
+  - id: dm-001
+    text: "TBD - from GSC top query about Korean VC / ventureoracle.kr"
+    category: domain
+    framework: null
+    language: en
+    source: gsc
+
+  - id: dm-002
+    text: "TBD - from GSC top query about Korean AI investing / founder thesis"
+    category: domain
+    framework: null
+    language: en
+    source: gsc
+
+  - id: dm-003
+    text: "TBD - from GSC top Korean-language query about Korean VC"
+    category: domain
+    framework: null
+    language: ko
+    source: gsc
+
+  - id: dm-004
+    text: "TBD - from Naver trends around '한국 VC' / '한국 벤처투자' / '해외 한인 투자'"
+    category: domain
+    framework: null
+    language: ko
+    source: naver
+
+  - id: dm-005
+    text: "TBD - from Naver trends around '한국 AI 스타트업 투자'"
+    category: domain
+    framework: null
+    language: ko
+    source: naver
+
+  - id: dm-006
+    text: "TBD - from LinkedIn search auto-complete after 'Korean VC'"
+    category: domain
+    framework: null
+    language: en
+    source: linkedin
+
+  - id: dm-007
+    text: "TBD - from LinkedIn search auto-complete after 'TheVentures'"
+    category: identity
+    framework: null
+    language: en
+    source: linkedin
+
+  - id: dm-008
+    text: "TBD - from LinkedIn search auto-complete after 'Ethan Cho'"
+    category: identity
+    framework: null
+    language: en
+    source: linkedin
+
+  - id: dm-009
+    text: "TBD - reader-submitted or inbound DM phrasing ('I was looking for X')"
+    category: domain
+    framework: null
+    language: en
+    source: other_demand
