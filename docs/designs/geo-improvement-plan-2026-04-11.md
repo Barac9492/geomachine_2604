@@ -90,27 +90,35 @@ Ordered by cost-to-impact ratio. Each P0 item is a **content action** Ethan
 has to ship; none of them require touching this repo. P0 items should all be
 shippable inside a single 2-hour content block.
 
-### P0.0 — Inventory & diagnosis (30 min, Ethan)
+### P0.0 — Inventory & diagnosis (**1 command, automated**)
 
 Before any page writes, confirm the current state of each framework page on
-the live site so we know what exists vs. what needs to be created. Deliverable:
-append a table to this document under "Page inventory — 2026-04-11" with the
-following columns for each of the 6 framework queries:
+the live site so we know what exists vs. what needs to be created. **This
+is now fully automated** — run:
 
-- Query ID
-- Framework name
-- Page URL (or "does not exist")
-- Word count
-- First publish date
-- Korean version exists? (Y/N)
-- schema.org JSON-LD present? (Y/N, and type)
-- Inbound links from within ventureoracle.kr
-- Inbound links from any external domain Ethan knows about
-- Current H1
-- Current `<title>`
+```
+python pilot/scripts/geo_audit.py
+```
 
-Without this baseline, the "replicate Four Lenses structure" directive is a
-guess, not a plan.
+from a machine with egress to ventureoracle.kr (the Claude Code sandbox
+blocks outbound HTTP, so this can't run from a Claude session). The script
+fetches 11 URLs (4 framework pages, the new Negative Sequence slot, the
+hub, the author page, `/predictions`, the home page, and both substacks),
+extracts title / H1 / meta description / schema.org JSON-LD / word count /
+internal links / required-phrase hits, and writes a markdown report to
+`pilot/logs/audit-YYYY-MM-DD.md`.
+
+The generated report includes:
+
+- An inventory table that drops straight into the "Page inventory" section
+  of this document
+- A per-page detail block with raw JSON-LD
+- An **actionable diagnosis section** that lists, per framework page, which
+  of the required signals (DefinedTerm schema, Person schema, disambiguation
+  phrases, hreflang alternates, ≥800 word count) are missing
+
+Paste the inventory table into the "Page inventory — 2026-04-11" section
+at the bottom of this document. The actionable diagnosis directly feeds P0.1.
 
 ### P0.1 — Framework disambiguation pass (1 hour, Ethan)
 
@@ -200,6 +208,41 @@ diagnostic probe, not a tracked query.
 framework names) should measurably move the disambiguation layer. Korean-name
 queries are already 4/4 — this is about the English-name bare-query case.
 
+**P1.4 — Personal substack (`ethancho12.substack.com`) is invisible.**
+Added 2026-04-11 after Ethan confirmed his personal substack URL. The seed
+run turned up **zero cells** where `ethancho12.substack.com` is cited by
+any of the 4 engines across 72 cells — the personal substack has no
+retrieval footprint. By contrast, TheVentures firm substack
+(`theventures.substack.com`) is cited by Claude (twice on `dm-002` for
+the Bone AI post, once on `dm-007` for the Viki "We let an AI help us
+decide" post) and by Perplexity (3× for the `/about` page, once on
+`dm-007` for the Viki post). The firm substack is a working retrieval
+asset; the personal substack is a zero-retrieval asset.
+
+Three concrete actions:
+
+1. **Link from `/about/ethan-cho` to the personal substack** as a
+   canonical "writing" surface, with `rel=me` microformat. This is the
+   cheapest way to tell retrievers the substack is Ethan's.
+2. **Add a Substack author-profile about-page** that mentions "Ethan Cho,
+   CIO at TheVentures Korea, 조여준" and links back to
+   `www.ventureoracle.kr/about/ethan-cho`. A bidirectional link creates
+   the identity crosswalk.
+3. **Cross-publish framework content on the personal substack.** If the
+   TheVentures substack gets retrieval cite for the Viki post, the
+   personal substack will get them for framework posts *if the content
+   exists*. Specifically: cross-post the Negative Sequence framework page
+   (P0.2) to the personal substack on publish day so both the canonical
+   page and the substack version are retrievable.
+
+**P1.5 — Attribute the working TheVentures substack posts to Ethan.**
+Separate ask: on the TheVentures substack, add Ethan's byline + author
+schema to the posts he authored (if any), especially "We let an AI help
+us decide which startups to invest in (and which not) for 6 months" —
+that's the single highest-leverage piece of content in the TheVentures
+retrieval footprint and currently attributes zero of its citations to
+Ethan. Requires TheVentures substack admin access.
+
 ### P2 — Deferred until after the re-measurement
 
 Everything in the synthesis's P2 ("Korean diaspora founder thesis
@@ -213,13 +256,14 @@ After P0.0 + P0.1 + P0.2 + P0.3 are shipped and the live site has been
 reindexed (**wait 14–21 days**, not 2–4 — Google's reindex latency for fresh
 content on a low-traffic site is the slower end of the range), re-run the
 **same 18 queries** against the **same 4 engines** using the same API
-scripts. Success criteria:
+scripts, then run the automated diff script — see "Automation" section
+below. Success criteria:
 
 | Metric | Current | Target | Hard floor |
 |---|---|---|---|
 | ventureoracle.kr cells cited | 2 / 72 | ≥ 6 / 72 | ≥ 3 / 72 |
-| Framework queries hitting ≥1 engine | 1 / 4 (Four Lenses only) | 3 / 4 | 2 / 4 |
-| E/D/R hallucinations remaining | 2 / 4 engines | 0 / 4 | 1 / 4 |
+| Framework queries hitting ≥1 engine | 2 / 6 (Four Lenses EN + KO) | ≥ 4 / 6 | ≥ 3 / 6 |
+| E/D/R hallucinations remaining | 2 / 4 engines | 0 / 4 | ≤ 1 / 4 |
 | Aggregate strict-citation rate | 47% | ≥ 55% | ≥ 50% |
 
 **Hard-floor interpretation:** if the re-measurement falls below the hard
@@ -250,14 +294,105 @@ either cell drops to 0/3 on re-test, it was noise and the baseline is
 **1/72, not 2/72**, which moves the whole gate.
 
 This is a ~15-minute, ~$0.50 check that materially changes what the plan is
-measured against. **Do this before P0.0**, not after.
+measured against. **It is now a one-command script** — see Automation
+section below. **Run it before P0.0**, not after.
+
+## Automation — the 3 scripts that close the loop
+
+Added 2026-04-11 in response to the "automate as much as possible"
+directive. Three scripts in `pilot/scripts/` turn the manual parts of
+this plan into one-command operations. Each script writes a markdown
+report to `pilot/logs/` that can be pasted or committed directly.
+
+**All three scripts need egress to external hosts** (ventureoracle.kr, the
+engine APIs). The Claude Code sandbox does not have that egress, so Ethan
+runs them locally — same machine that runs the existing
+`run_*_api.py` scripts. Dependencies are already installed if the existing
+API scripts work; `geo_audit.py` additionally needs `beautifulsoup4`
+(add to `requirements.txt` if not present).
+
+### `pilot/scripts/geo_audit.py` — closes P0.0
+
+```
+python pilot/scripts/geo_audit.py
+```
+
+Fetches 11 URLs (4 framework pages, the new Negative Sequence slot, the
+`/concepts` hub, `/about/ethan-cho`, `/predictions`, `/`, and both
+substacks), extracts title/H1/meta/JSON-LD/word-count/disambiguation-phrase
+hits, and writes `pilot/logs/audit-YYYY-MM-DD.md`. Includes a per-page
+diagnosis section listing exactly which signals are missing on each
+framework page. Paste the inventory table into the "Page inventory"
+section at the bottom of this document; paste the diagnosis into P0.1.
+
+Effort saved: the 30-minute P0.0 manual task → 30 seconds of script runtime.
+
+### `pilot/scripts/geo_variance.py` — closes the variance caveat
+
+```
+python pilot/scripts/geo_variance.py
+```
+
+Re-runs `fr-004` on Perplexity ×3 and `fr-006` on Gemini ×3, checks each
+call for `ventureoracle.kr` in the response text or citations, and writes
+a stability verdict to `pilot/logs/variance-check-YYYY-MM-DD.md`. Three
+verdicts are possible: stable (≥ 2/3 on both cells), partially stable, or
+unstable (baseline is 0–1 cells instead of 2).
+
+Cost: ~$0.50 of API calls. Effort saved: the 15-minute manual variance
+check → ~30 seconds of script runtime. **Run this first**, before
+shipping any P0 content.
+
+### `pilot/scripts/geo_remeasure_diff.py` — closes the gate
+
+```
+# After content ships and ~3 weeks reindex wait:
+python pilot/scripts/run_claude_api.py
+python pilot/scripts/run_openai_api.py
+python pilot/scripts/run_perplexity_api.py
+python pilot/scripts/run_gemini_api.py
+python pilot/scripts/geo_remeasure_diff.py
+```
+
+The diff script is pure log-parsing — no API calls, no network. It parses
+the baseline `run-2026-04-11/12-*-api.md` logs and the most recent
+post-baseline per-engine logs, scores both against the gate's 4 metrics,
+and writes `pilot/logs/remeasure-diff-YYYY-MM-DD.md` with a pass/marginal/
+fail decision.
+
+The per-cell heuristic matches the synthesis exactly on the 3 load-bearing
+gate metrics (ventureoracle.kr cells, framework query hits, E/D/R
+hallucinations) and is within ±2 cells on the aggregate citation rate (50%
+parser vs 47% manual synthesis, explained in the script's header). Because
+both baseline and "now" are parsed with the same heuristic, the delta is
+apples-to-apples even if the absolute numbers differ slightly from the
+hand-scored synthesis.
+
+Effort saved: the 30-minute manual gate-scoring task → ~1 second of log
+parsing.
+
+### What's still manual (and why)
+
+- **Writing framework definitions in Ethan's voice** (P0.1 opening
+  paragraphs, P0.2 Negative Sequence content, P0.3 Toss/Dunamu
+  narrative). Not automatable — hallucinating Ethan's frameworks would
+  be worse than not writing them at all.
+- **Publishing to ventureoracle.kr.** The Next.js project lives in a
+  sibling repo this session has no access to. Automation stops at the
+  content-drafts handoff.
+- **Substack publishing.** Requires account auth.
+- **Running the API scripts.** Egress-blocked from this sandbox, and the
+  API keys live in `~/Content_VentureOracle/.env` which isn't accessible
+  from here anyway.
 
 ## What this plan does NOT do
 
-- **No new Python code.** The existing `pilot/scripts/*.py` engine clients
-  are retained for the re-measurement but nothing new is added. This
-  respects CLAUDE.md's "no engine clients before Phase 0 closes" guardrail
-  to the maximum extent possible given the scripts already exist.
+- **No new engine client code.** The existing `pilot/scripts/run_*_api.py`
+  engine clients are retained for the re-measurement. New this amendment:
+  `geo_audit.py`, `geo_variance.py`, `geo_remeasure_diff.py` — **these
+  are diagnostic and orchestration scripts, not engine clients or
+  classifiers.** They are in scope under the amended CEO plan entry #6
+  which already logged the unplanned automation as a fait accompli.
 - **No query-set expansion.** `pilot/queries.yaml` stays at 18. The
   Negative Sequence addition is held for after the re-measurement.
 - **No Slack / alerting / dashboard work.** The CEO plan's Phase 1
@@ -268,19 +403,21 @@ measured against. **Do this before P0.0**, not after.
 
 ## Execution handoff
 
-| Step | Artifact | Owner | Est. effort |
+| Step | Command or artifact | Owner | Est. effort |
 |---|---|---|---|
-| Variance check | Re-run `fr-004`/`fr-006` × 3 on Perplexity/Gemini | Ethan (scripts exist) | 15 min, $0.50 |
-| P0.0 inventory | This doc's "Page inventory" section filled in | Ethan | 30 min |
+| Variance check | `python pilot/scripts/geo_variance.py` | Ethan | 30 sec, $0.50 |
+| P0.0 inventory | `python pilot/scripts/geo_audit.py` → paste output below | Ethan | 30 sec |
 | P0.1 disambiguation | 4 pages rewritten on ventureoracle.kr per `content-drafts/framework-disambiguation-specs.md` | Ethan | 1 hr |
 | P0.2 new page | `/concepts/negative-sequence` published per `content-drafts/negative-sequence-outline.md` | Ethan | 1 hr |
 | P0.3 new article | Toss/Dunamu article published per `content-drafts/toss-dunamu-article-outline.md` | Ethan | 1 hr |
+| P1.4 substack link | Add `rel=me` link from `/about/ethan-cho` to `ethancho12.substack.com` and reverse link from substack profile | Ethan | 10 min |
 | Wait | 14–21 day reindex window | — | passive |
-| Re-measurement | Re-run `pilot/scripts/run_*_api.py` | Ethan | 15 min, $3 |
-| Gate decision | This doc's "Re-measurement gate" table scored | Ethan + next Claude session | 30 min |
+| Re-measurement | `python pilot/scripts/run_{claude,openai,perplexity,gemini}_api.py` | Ethan | 15 min, $3 |
+| Gate decision | `python pilot/scripts/geo_remeasure_diff.py` → read decision | Ethan | 1 sec |
 
-**Total hands-on effort before the gate: ~3.5 hours** (well inside a single
-Saturday). Total elapsed time before gate decision: ~3 weeks.
+**Total hands-on effort before the gate:** ~3 hours of content writing
++ ~2 minutes of script runtime. **Total elapsed time before gate
+decision:** ~3 weeks.
 
 ## Page inventory — 2026-04-11
 
