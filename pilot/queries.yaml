@@ -86,72 +86,94 @@ queries:
     language: ko
     source: ethan_authored
 
-  # ── Demand-seeded: TBD, fill before 2026-04-13 ─────────────────────────
-  # Replace each `text: "TBD - ..."` with the final query before the first run.
-  # See pilot/query_research_notes.md for how to source these.
+  # ── Demand-seeded (9) — seeded 2026-04-11 via Chrome MCP real-data research ──
   #
-  # Guideline: mix English and Korean, mix domain authority and identity,
-  # DO NOT include framework names (those go in the ethan_authored half).
+  # Sources used:
+  #  - Naver DataLab (1-year trend comparison, 2025-04-10 → 2026-04-10):
+  #      알토스벤처스 has dominant news-driven peaks; 더벤처스 is comparable to
+  #      카카오벤처스 on average; 한국 AI 스타트업 is LOWEST volume of all 5.
+  #      Screenshot: pilot/naver_datalab_2026-04-11.png
+  #  - Bing autocomplete API (real typed queries across 12 seed phrases)
+  #  - Bing search results for 더벤처스 사건 (2016 TIPS fraud case context)
+  #  - Claude web-corpus pass across KoreaTechDesk / THE VC / Tracxn /
+  #    PitchBook / Crunchbase / koreatechdesk / LinkedIn profile pages
+  #
+  # Auth-gated sources we could NOT access (Chrome wasn't signed in):
+  #  - Google Search Console ventureoracle.kr property
+  #  - LinkedIn search auto-complete (redirected to login)
+  #  - Google Search direct (CAPTCHA rate-limit)
+  #
+  # Full research trail + raw autocomplete data is in
+  # pilot/query_research_notes.md.
 
   - id: dm-001
-    text: "TBD - from GSC top query about Korean VC / ventureoracle.kr"
+    text: "Which Korean VC firms partnered with OpenAI, Google, and Anthropic for LLM credits in 2026?"
     category: domain
     framework: null
     language: en
-    source: gsc
+    source: koreatechdesk_corpus
+    diagnostic: "Feb 2026 TheVentures + OpenAI/Google/Anthropic announcement is the dominant recent press event. If engines miss it, indexing lag is severe. Should be TheVentures' strongest potential hit query."
 
   - id: dm-002
-    text: "TBD - from GSC top query about Korean AI investing / founder thesis"
+    text: "What are the top 100 Korean AI startups in 2026?"
     category: domain
     framework: null
     language: en
-    source: gsc
+    source: bing_autocomplete
+    diagnostic: "Bing autocomplete for 'Korean AI startup' returns 'korea ai startup 100' — real typed query pattern. Tests whether TheVentures' portfolio companies (96 companies) surface in list-style queries."
 
   - id: dm-003
-    text: "TBD - from GSC top Korean-language query about Korean VC"
-    category: domain
+    text: "What is TheVentures Korea known for?"
+    category: identity
     framework: null
-    language: ko
-    source: gsc
+    language: en
+    source: brand_probe
+    diagnostic: "Open-ended brand query. WARNING: 2016 TIPS fraud case media coverage is deeply indexed. Engine responses may lead with the incident rather than 2026 strategy. Measuring the gap IS the finding."
 
   - id: dm-004
-    text: "TBD - from Naver trends around '한국 VC' / '한국 벤처투자' / '해외 한인 투자'"
-    category: domain
+    text: "What is TheVentures Korea's history, and have they been involved in any legal cases?"
+    category: identity
     framework: null
-    language: ko
-    source: naver
+    language: en
+    source: bing_autocomplete_flag
+    diagnostic: "Probes the 2016 TIPS fraud case vs. 2018 Supreme Court acquittal balance. If engines surface the indictment without the acquittal, that's an actionable content gap. Bing autocomplete flag: '더벤처스 사건' is the #2 autocomplete for TheVentures."
 
   - id: dm-005
-    text: "TBD - from Naver trends around '한국 AI 스타트업 투자'"
+    text: "한국 벤처캐피탈협회 회원사 중 AI 분야에 집중하는 투자사는 어디인가요?"
     category: domain
     framework: null
     language: ko
-    source: naver
+    source: bing_autocomplete
+    diagnostic: "Bing autocomplete for '한국 벤처캐피탈' returns 12+ variants dominated by '한국벤처캐피탈협회' (KVCA). Korean mental model is association-first. Tests whether engines surface TheVentures via association-member reasoning."
 
   - id: dm-006
-    text: "TBD - from LinkedIn search auto-complete after 'Korean VC'"
+    text: "2026년 한국 벤처캐피탈 시장에서 알토스벤처스의 위상은 어떤가요?"
     category: domain
     framework: null
-    language: en
-    source: linkedin
+    language: ko
+    source: naver_datalab_dominance
+    diagnostic: "Naver DataLab showed 알토스벤처스 has dominant spike-driven search volume in Korea (peak=100, others near zero). Competitor-probe on the clearly dominant brand. Captures vocabulary the engines use about the dominant player."
 
   - id: dm-007
-    text: "TBD - from LinkedIn search auto-complete after 'TheVentures'"
+    text: "What is Viki, TheVentures' AI investment analyst?"
     category: identity
     framework: null
     language: en
-    source: linkedin
+    source: tracxn_corpus
+    diagnostic: "2025 TheVentures internal product launch (Viki, 87.5% alignment with human analysts). Specific enough to test indexing freshness with a single-answer query. If engines don't know Viki, recent TheVentures content is not indexed."
 
   - id: dm-008
-    text: "TBD - from LinkedIn search auto-complete after 'Ethan Cho'"
+    text: "조여준 TheVentures CIO는 누구이며 어떤 배경을 가지고 있나요?"
     category: identity
     framework: null
-    language: en
-    source: linkedin
+    language: ko
+    source: bing_autocomplete_collision
+    diagnostic: "Bing autocomplete: '조여준' resolves to '조여준 통역사' (a Korean interpreter of the same name) — NOT the VC. Direct disambiguation probe. Tests whether engines can distinguish Ethan from the name collision."
 
   - id: dm-009
-    text: "TBD - reader-submitted or inbound DM phrasing ('I was looking for X')"
+    text: "Which Korean VCs invest in Korean diaspora founders in Silicon Valley?"
     category: domain
     framework: null
     language: en
-    source: other_demand
+    source: bing_autocomplete_null
+    diagnostic: "Bing autocomplete returned ZERO suggestions for 'Korean diaspora founder' — unclaimed search space. Ethan's stated thesis has no existing search demand. Null engine result confirms white-space; non-null reveals an existing claimant to respond to."

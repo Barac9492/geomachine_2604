@@ -6,6 +6,14 @@ Hand-off notes for any Claude Code session working on this repo.
 
 **Phase 0 — Manual Pilot.** No automation code yet. If you are being asked to write engine clients, classifiers, or launchd scripts *before* `pilot/assessment-2026-04-27.md` exists with a GO or PIVOT verdict, **stop and ask**. The entire point of Phase 0 is to validate the signal before committing to automation.
 
+## Known reputational indexing risk (surfaced 2026-04-11 during demand seeding)
+
+**The 2016 TheVentures TIPS fraud case is still deeply indexed** in the Korean-language web corpus. Timeline: 호창성 CEO indicted April 2016, acquitted October 2016 at trial, Supreme Court confirmed acquittal February 2018. But Bing autocomplete surfaces `더벤처스 사건` as the #2 suggestion for `더벤처스`, meaning AI engines trained on this corpus may default to the indictment story when asked about TheVentures.
+
+This is a load-bearing context item: the tracker's zero-citation baseline is not just about content volume, it's potentially about *negative* old content dominating the indexing. Queries `dm-003` and `dm-004` in `pilot/queries.yaml` are designed to probe this directly. See `pilot/query_research_notes.md` "Strategic alert" section for the detailed interpretation table.
+
+Strategic implication: if the pilot reveals engines leading with 2016 content, the Q2 2026 content priority shifts toward proactively publishing the acquittal story + the 2026 leadership era, regardless of what the framework-query pilot results show.
+
 ## Strategic guardrails (from CEO review 2026-04-11)
 
 1. **< 2 hours / month operating budget.** This is the VentureOracle core principle. Every design decision must preserve it. Obsidian is the primary reporting surface. Slack is the alert layer. **No hosted dashboards, no email for v1.**
