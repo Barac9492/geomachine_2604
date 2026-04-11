@@ -196,3 +196,52 @@ Phase 1 automation is still worth building to track these metrics over time, but
 6. If the re-run still shows them invisible → the bottleneck is deeper (maybe indexing, maybe authority signals) and automation premature
 
 Cost of re-running: another ~$3 in API calls. Wall time: ~15 minutes. This is the actual decision loop that creates value — not "measure the same thing for 2 weeks and see if anything changed on its own."
+
+---
+
+## Review errata — appended 2026-04-11 (branch `claude/review-latest-run-NwrhB`)
+
+A post-hoc review of this synthesis against the raw per-engine logs surfaced three errors that don't change the headline conclusions but do matter for anyone citing specific cells downstream. Corrections below; the body of the document above is left intact for provenance.
+
+### Erratum 1 — Claude fr-004 vs. fr-006 conflation
+
+The fr-004 table row in the cross-engine citation matrix (line 25) says Claude's behavior was **"❌❌ (actively denies it exists)"**. The raw Claude log disagrees:
+
+- `run-2026-04-11-claude-api.md:1171` for `fr-004` (English): *"Same pattern as fr-003: generic 'People/Market/Product/Business Model' framework from training. 0 sources cited. Claude hallucinates a plausible answer without attribution."*
+- `run-2026-04-11-claude-api.md:1173` for `fr-006` (Korean): *"Worst miss. Claude explicitly says 'Four Lenses as a VC evaluation framework does not exist'"*
+
+The **active denial happened on fr-006 (Korean), not fr-004 (English)**. Claude's English fr-004 behavior was confabulation from training, not denial. The cross-engine hit count doesn't change (both are ❌ for Claude), but the content-fix implication does: the Korean Four Lenses page specifically needs to include the "not Four T's" explicit negation, because that's what Claude's Korean retrieval currently returns in place of Ethan's framework.
+
+### Erratum 2 — Citation-rate denominator includes dm-006
+
+The per-engine rollup table on line 42 divides by 18 across all engines, yielding 44%. But `dm-006` (Altos 위상) is explicitly flagged on line 33 as **"N/A | N/A | N/A | N/A — this is a competitor probe, not a miss."** If a query is intentionally not a citation target, counting it as a miss for every engine silently inflates the denominator.
+
+Corrected arithmetic:
+
+| Engine | Hits (unchanged) | Correct denom (17 × 4 = 68) | Correct rate |
+|---|---|---|---|
+| Claude | 10 | 17 | 59% |
+| GPT-4o | 5 | 17 | 29% |
+| Perplexity | 8 | 17 | 47% |
+| Gemini | 9 | 17 | 53% |
+| **Aggregate** | **32** | **68** | **47%** |
+
+The headline "44% cross-engine citation rate" should be **47%**. Small delta, but every downstream document that cites this synthesis will quote the wrong number unless this is fixed at the source. The rest of the document's qualitative conclusions hold unchanged.
+
+### Erratum 3 — CEO plan predictions declared "wrong" on n=1
+
+The "What this does to the CEO plan's pilot predictions" table on line 174 marks CEO plan predictions as **WRONG / DECISIVELY WRONG / PARTIALLY WRONG** based on a single run with no variance bounds. CLAUDE.md's Phase 1 decision rules prescribe N=3 majority vote specifically because Claude and Perplexity drift at temperature=0. The single-call methodology used here can't distinguish "the engine genuinely knows this" from "the engine happened to retrieve this on one call."
+
+Specifically at risk: the two ventureoracle.kr-citing cells (Perplexity `fr-004`, Gemini `fr-006`) are the load-bearing proof points for the "the Four Lenses page works and the others don't" conclusion. If either cell is single-call noise rather than stable retrieval behavior, the baseline is **1/72, not 2/72**, which moves the re-measurement gate materially.
+
+**Recommended action:** before using this synthesis as a baseline for any content priority decision, re-run `fr-004` × 3 on Perplexity and `fr-006` × 3 on Gemini as a cheap stability check (~$0.50, ~10 min). If both cells stay cited, the baseline is valid. If either drops, amend the baseline and re-evaluate.
+
+### What the errata do NOT change
+
+- The falsification of the 2016 TIPS fraud reputational-indexing hypothesis (`dm-004`, 4/4 explicit "no"). This holds.
+- The framework-query hallucination map (GPT-4o and Gemini hallucinating different E/D/R expansions, etc.). This holds.
+- The bio / partnership consensus findings (id-003, dm-001, dm-008 at 4/4). These hold.
+- The ranked content-priority list in the "P0 — Fix right now" section. This holds because the hallucinations to displace are real even if the variance bounds on the baseline are weaker than stated.
+- The "GO with content priorities" verdict. This holds as a directional recommendation, though it should be understood as conditional on the variance check above, not as an unconditional gate pass.
+
+Downstream documents should read this errata note together with the body above. The improvement plan driven by this synthesis lives at `docs/designs/geo-improvement-plan-2026-04-11.md` and the variance check is sequenced as the very first action in that plan.
