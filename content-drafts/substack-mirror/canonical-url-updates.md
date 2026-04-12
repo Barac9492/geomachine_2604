@@ -1,15 +1,15 @@
 # Canonical URL health check for existing articles
 
 Source feed: https://ethancho12.substack.com/feed
-Existing articles.ts: /Users/yeojooncho/clawd/ventureoracle-site/app/data/articles.ts
-Generated: 2026-04-12T09:23:25
+Existing articles.ts: /tmp/voracle-substack-integration/ventureoracle-site/app/data/articles.ts
+Generated: 2026-04-12T09:34:17
 
 ## Current state of canonical URLs across 17 articles
 
-- **6 articles** use the substack ROOT (`https://ethancho12.substack.com`).
+- **4 articles** use the substack ROOT (`https://ethancho12.substack.com`).
   This is the SEO bug: every one of these claims the substack homepage as canonical,
   which dilutes the signal. These need per-post canonical URLs.
-- **7 articles** already use correct per-post substack canonicals.
+- **22 articles** already use correct per-post substack canonicals.
   Nothing to do for these.
 - **4 articles** are self-canonical (point at `ventureoracle.kr/insights/<slug>`).
   These are ventureoracle.kr-native content, never cross-posted on substack.
@@ -22,12 +22,26 @@ _6 substack-root articles don't have recent substack counterparts._
 
 ## Articles already with correct canonical URLs
 
-**3 articles are already correct** (exact URL match).
+**17 articles are already correct** (exact URL match).
 No action required.
 
+- `koreas-13-billion-venture-market-has-a-body-composition-prob` → `https://ethancho12.substack.com/p/koreas-13-billion-venture-market`
+- `for-non-korean-lps-why-korea-is-the-most-mispriced-startup-m` → `https://ethancho12.substack.com/p/for-non-korean-lps-why-korea-is-the`
+- `when-myth-arrives-something-dies` → `https://ethancho12.substack.com/p/43f`
+- `for-non-korean-lps-the-inverted-risk-curve` → `https://ethancho12.substack.com/p/for-non-korean-lps-the-inverted-risk`
+- `kakao-focus-diversification-failure` → `https://ethancho12.substack.com/p/5ab`
+- `code-safe-we-are-not` → `https://ethancho12.substack.com/p/dae`
+- `why-korea-may-lose-ai-race-while-using-ai-best` → `https://ethancho12.substack.com/p/ai-d53`
+- `world-google-is-dreaming-of` → `https://ethancho12.substack.com/p/google`
+- `why-we-invested-in-a-rice-company` → `https://ethancho12.substack.com/p/why-we-invested-in-a-rice-company`
+- `youre-fired-kind-of` → `https://ethancho12.substack.com/p/youre-fired-kind-of`
+- `your-boss-will-hate-this-post` → `https://ethancho12.substack.com/p/0fe`
+- `anger-is-not-free` → `https://ethancho12.substack.com/p/dfe`
+- `20-watt-genius-1000-watt-fool` → `https://ethancho12.substack.com/p/20-1000`
+- `chains-debt-algorithms` → `https://ethancho12.substack.com/p/b0d`
+- `what-lucent-block-actually-revealed` → `https://ethancho12.substack.com/p/a6b`
 - `openai-hardware-dilemma` → `https://ethancho12.substack.com/p/openais-65-billion-hardware-dilemma`
 - `2-million-users-worthless` → `https://ethancho12.substack.com/p/your-startups-2-million-users-are`
-- `ai-native-vc-pitch-deck` → `https://ethancho12.substack.com/p/167`
 
 ## Alt-language siblings (Korean/English pairs)
 
@@ -48,7 +62,7 @@ language version. These are effectively translated siblings. Three options:
 
 ## Substack-root articles without a detected match
 
-**6 articles** use the substack root canonical but
+**4 articles** use the substack root canonical but
 the matcher couldn't find a corresponding substack post. Two possibilities:
 
 1. The post WAS on substack but is no longer in the RSS feed
@@ -59,8 +73,6 @@ For each, either (a) search substack manually for the actual post URL and
 apply it, or (b) change the canonical to `https://ventureoracle.kr/insights/<slug>`
 (self-canonical) if it's a ventureoracle-native article.
 
-- `korean-ai-ecosystem-2026` — Korean AI Ecosystem 2026: Government Policy vs. Market Reality
-- `diaspora-founders-dual-market-ai` — Diaspora Founders: The Dual-Market Advantage Reshaping Korean AI
 - `advisor-equity-trap-5-percent` — The 5% Advisor Trap: How Founders Destroy Their Cap Tables Before Series A
 - `amazon-nuclear-ai-datacenters` — "Nuclear Power for AI: Why Amazon's Betting on Reactors
 - `goldman-ai-proof-software-basket` — Goldman's AI-Proof Portfolio: Which Companies Survive AGI?

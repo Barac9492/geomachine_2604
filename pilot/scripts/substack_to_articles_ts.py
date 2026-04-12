@@ -140,6 +140,13 @@ OVERRIDES: dict[str, dict[str, str]] = {
         "slug": "ai-pitch-deck-review-korean-original",
         "category": "Building",
     },
+    # VentureOracle #001: 한국의 석유 상황 (2026-04-12)
+    # First issue of the VentureOracle prediction series (oil / Hormuz lag).
+    "ventureoracle-001": {
+        "title": "VentureOracle #001: The Hormuz Oil Lag",
+        "slug": "ventureoracle-001-hormuz-oil-lag",
+        "category": "Predictions",
+    },
 }
 
 STOPWORDS = {
@@ -222,7 +229,10 @@ def parse_articles_ts(path: Path) -> list[ExistingArticle]:
                 article.title = raw_value
             elif key == "titleKo":
                 article.title_ko = raw_value
-            elif key == "canonicalUrl":
+            elif key in ("canonicalUrl", "substackUrl"):
+                # Schema has renamed this field back and forth between origin
+                # and work-in-progress branches. Treat both field names as the
+                # same semantic "per-post substack URL" signal.
                 article.canonical_url = raw_value
             elif key == "wordCount":
                 try:
@@ -471,10 +481,14 @@ def emit_article_object(post: SubstackPost, indent: str = "  ") -> str:
 
     title = post.title
     title_ko = ""
-    if post.language == "ko":
-        # For Korean posts, titleKo holds the original Korean title and
-        # title holds either the hand-curated English title (from OVERRIDES)
-        # or a [Korean] prefixed fallback for the card grid.
+    # Only treat as Korean-titled if the ORIGINAL title actually contains
+    # Hangul characters. Posts with an English-language title but Korean
+    # body shouldn't get the `[Korean]` prefix or a duplicate titleKo.
+    has_hangul = any(0xAC00 <= ord(ch) <= 0xD7A3 for ch in original)
+    if post.language == "ko" and has_hangul:
+        # titleKo holds the original Korean title; title holds either the
+        # hand-curated English title (from OVERRIDES) or a [Korean] prefixed
+        # fallback for the card grid.
         title_ko = original
         if title == original:  # no override applied
             title = f"[Korean] {original}"
@@ -488,7 +502,10 @@ def emit_article_object(post: SubstackPost, indent: str = "  ") -> str:
     lines.append(f'{indent}  date: {ts_string(format_date(post.published))},')
     lines.append(f'{indent}  category: {ts_string(category)},')
     lines.append(f'{indent}  readTime: {ts_string(read_time(post.word_count))},')
-    lines.append(f'{indent}  canonicalUrl: {ts_string(post.url)},')  # per-post, not root
+    # Field name on origin/main's Article interface is `substackUrl?` (optional).
+    # Some forks rename this to `canonicalUrl: string` — if that's live when you run
+    # this, post-process with `sed 's/substackUrl:/canonicalUrl:/g'`.
+    lines.append(f'{indent}  substackUrl: {ts_string(post.url)},')
     lines.append(f'{indent}  slug: {ts_string(post.slug)},')
     lines.append(f'{indent}  keywords: {ts_string_array(default_keywords(post))},')
     lines.append(f'{indent}  wordCount: {post.word_count},')
