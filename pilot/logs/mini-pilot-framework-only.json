@@ -1,0 +1,179 @@
+[
+  {
+    "engine": "perplexity",
+    "qid": "fr-001",
+    "query": "What is the Founder Intelligence framework?",
+    "vo_hit": false,
+    "ethan": false,
+    "sources": [
+      "https://infounderswords.substack.com/p/founder-intelligence-your-always",
+      "https://marissainternational.com/about/the-intelligence-framework",
+      "https://www.projectmanagertemplate.com/post/collective-intelligence-framework-a-detailed-guide",
+      "https://www.youtube.com/watch?v=fozsJxKcSQo",
+      "https://www.ninety.io/founders-framework",
+      "https://datalere.com/articles/three-eras-of-intelligence-framework"
+    ],
+    "text_preview": "**Founder Intelligence is an AI tool designed to help founders gain clarity on decisions by reflecting back their unfiltered thoughts in a concise, actionable way.**[1] Rather than providing advice or suggestions, it functions as what its creator Eddie Harran calls a \"signal mirror for founders\" — m"
+  },
+  {
+    "engine": "perplexity",
+    "qid": "fr-002",
+    "query": "Explain the E/D/R AI framework for startups",
+    "vo_hit": false,
+    "ethan": false,
+    "sources": [
+      "https://mitsloan.mit.edu/ideas-made-to-matter/new-framework-helps-companies-build-secure-ai-systems",
+      "https://www.defendsphere.io/post/ai-startups-compliance-frameworks-a-practical-guide-to-scaling-securely",
+      "https://stellarcyber.ai/learn/edr-and-ai-siem/",
+      "https://www.credo.ai",
+      "https://www.youtube.com/watch?v=_Rt4ty7UyiM",
+      "https://www.yash.com/blog/how-ai-powered-edr-stops-modern-attacks-in-real-time/",
+      "https://www.content.shi.com/SHIcom/ContentAttachmentImages/SharedResources/PDFs/Cylance/cylance-112219-AI-Driven-EDR-EBook.pdf"
+    ],
+    "text_preview": "The search results do not contain information about an \"E/D/R AI framework\" specifically designed for startups. \n\nHowever, the results do discuss two related but distinct concepts that may address your underlying interest:\n\n**EDR (Endpoint Detection and Response) with AI:** This refers to security t"
+  },
+  {
+    "engine": "perplexity",
+    "qid": "fr-003",
+    "query": "What is the MAU Trap in startup metrics?",
+    "vo_hit": false,
+    "ethan": false,
+    "sources": [
+      "https://siift.ai/blog/traction-metrics-for-startups-guide",
+      "https://railsware.com/blog/startup-metrics/",
+      "https://www.myzeller.com/au/blog/metrics-for-startup-founders",
+      "https://baremetrics.com/academy/startups-know-monthly-active-users",
+      "https://www.kamerracap.com/post/guide-to-customer-retention-metrics-what-startups-need-to-know",
+      "https://www.finrofca.com/news/value-mau-valuation-trap",
+      "https://whaly.io/posts/must-track-metrics-for-startup-success",
+      "https://www.gilion.com/basics/startup-metrics"
+    ],
+    "text_preview": "I don't find information about a \"MAU Trap\" specifically defined in the provided search results. While the search results discuss Monthly Active Users (MAU) as an important startup metric and mention a \"Value/MAU ratio\" as a potential valuation trap[6], they don't explicitly explain what the \"MAU Tr"
+  },
+  {
+    "engine": "perplexity",
+    "qid": "fr-004",
+    "query": "Four Lenses VC framework",
+    "vo_hit": true,
+    "ethan": true,
+    "sources": [
+      "https://www.ventureoracle.kr/concepts/four-lenses-framework",
+      "https://www.4lenses.org",
+      "https://fourlenses.com/fourlenses/",
+      "https://4lenses.org/part1/structure",
+      "https://www.theaugmentededucator.com/p/the-four-lenses-framework",
+      "https://fourlenses.com",
+      "https://paul4innovating.com/2015/02/17/the-four-lenses-of-innovation-by-rowan-gibson/",
+      "https://www.hypeinnovation.com/blog/applying-the-four-lenses-innovation"
+    ],
+    "text_preview": "**The Four Lenses VC framework** refers to the investment analysis methodology developed by Ethan Cho of VentureOracle, which evaluates opportunities through four perspectives: **Finance & Accounting**, **Global**, **Big Tech**, and **Venture**.[1]\n\n### Core Components\nThis framework requires analyz"
+  },
+  {
+    "engine": "perplexity",
+    "qid": "fr-005",
+    "query": "Founder Intelligence 프레임워크란",
+    "vo_hit": false,
+    "ethan": false,
+    "sources": [
+      "https://maily.so/leanx/posts/10z30xejzlw",
+      "https://leanx.kr/founderai",
+      "https://www.apple.com/kr/newsroom/2025/09/apples-foundation-models-framework-unlocks-new-intelligent-app-experiences/",
+      "https://acquiredentrepreneur.tistory.com/109",
+      "https://www.databricks.com/kr/blog/introducing-databricks-ai-security-framework-dasf",
+      "https://publicservices.international/resources/digital-publication/-ai---?id=15435&lang=ko",
+      "https://news.hada.io/weekly/202612",
+      "https://wikidocs.net/323989",
+      "https://hyuni.substack.com/p/111"
+    ],
+    "text_preview": "**Founder Intelligence 프레임워크**는 검색 결과에서 직접적으로 명명된 용어는 아니지만, LeanX의 **FounderAI**가 사용하는 **린 스타트업 기반 프레임워크**를 가리키는 것으로 보입니다. 이는 Ash Maurya의 Running Lean과 Lean Canvas를 중심으로 아이디어 검증부터 비즈니스 모델 설계까지의 과정을 구조화한 도구입니다.[1][2]\n\n### 주요 구성 요소\nFounderAI 프레임워크는 다음과 같은 단계와 도구로 스타트업 창업자를 코칭합니다:\n- **초기 단계 진단**: 사용자의 "
+  },
+  {
+    "engine": "perplexity",
+    "qid": "fr-006",
+    "query": "VC가 스타트업을 평가하는 Four Lenses 프레임워크",
+    "vo_hit": false,
+    "ethan": false,
+    "sources": [
+      "https://www.triplelight.co/service/detail/verification",
+      "https://acquiredentrepreneur.tistory.com/149",
+      "https://leansprint.kr/leansprint-blog-archive-past/",
+      "https://news.hada.io/topic?id=22985",
+      "https://kasba.or.kr/uploads/papers/ART002530113.pdf",
+      "https://kreonet.net/notifications/post/notice?t=1769965200020"
+    ],
+    "text_preview": "검색 결과에서 \"VC가 스타트업을 평가하는 Four Lenses 프레임워크\"에 대한 구체적인 정보를 찾을 수 없습니다.\n\n제공된 검색 결과에는 VC의 스타트업 평가와 관련된 여러 프레임워크가 언급되어 있지만, \"Four Lenses\"라는 명칭의 프레임워크는 포함되어 있지 않습니다. 검색 결과에서 찾을 수 있는 관련 프레임워크들은 다음과 같습니다:\n\n- **비즈니스 모델 캔버스**: 알렉산더 오스터왈더의 프레임워크로 초기 창업자가 사용하기 쉬운 형태[3]\n- **4D 프레임워크**: AI 제품 전략 수립을 위한 방향, 차별화, 설계,"
+  },
+  {
+    "engine": "gemini",
+    "qid": "fr-001",
+    "query": "What is the Founder Intelligence framework?",
+    "vo_hit": false,
+    "ethan": false,
+    "sources": [
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHhHBvKyOf7y8Y5mo_n0SF7u5lyW0eFK-0aweC_Cp8tA8c0daTsGIqCNYBQy1bKSd4Y5xBbGNtvGIlbTzuLYxSZPS-zkYMsdLjM6Me6lOBaqt6xEJTqOBIjZqGiRKSBntY=",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEugPfkomZ8lI3qE9X23JQLqlnSDC3xq8VdW91_savFdrgkOPo_tRBmSIVUPss2BS8EQzoSSYubyYf0P0oGdkXGW70JKSrNpDaQpUc43U3W6Jc683JMil6yX0ar4RXt3pki0pDDV7OmX0OI2KD8eCE_3aBYHghoTCv8V_3HoYVC0JkzDRJs",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHCVRcxWxUZCiDWY4osMSEXK3P6ZL1Sx8xrAMlisSKC3lxb6YytPcA6zObZbAU9s2FL_t864-ql9sQwrzIJXb6vZMjBeBoiWpQedxUwBcNGNo-dxPIu9MjJivBZZknuv0O7vo0=",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFKwnefXIo4tdqLI1rLKLnttJnV95rcn_sdvzZgMB0hIY5ar8PeL7m8ZpPeUvwRKxjtmzysZWESi_vXt49aYKtdf2PIwenNBMd-Ls4AF_5_AWT8B4YPj4aMc_0qOrpc6HEWrXEN8z0lLLQMGMEaDkfjQykpHaUTdi_P"
+    ],
+    "text_preview": "The term \"Founder Intelligence framework\" can refer to several distinct concepts, each offering a different approach to supporting founders and business leaders. Here's a breakdown of the most prominent interpretations:\n\n### 1. Awareness Intelligence™ Framework\n\nThis is a practical framework develop"
+  },
+  {
+    "engine": "gemini",
+    "qid": "fr-002",
+    "query": "Explain the E/D/R AI framework for startups",
+    "vo_hit": false,
+    "ethan": false,
+    "sources": [],
+    "text_preview": ""
+  },
+  {
+    "engine": "gemini",
+    "qid": "fr-003",
+    "query": "What is the MAU Trap in startup metrics?",
+    "vo_hit": false,
+    "ethan": false,
+    "sources": [],
+    "text_preview": "## The MAU Trap: When a Startup's Growth Metric Becomes a Blindfold\n\nIn the fast-paced world of startups, metrics are king. Among the most cited is Monthly Active Users (MAU), a seemingly straightforward measure of how many unique users interact with a product in a 30-day period. However, an obsessi"
+  },
+  {
+    "engine": "gemini",
+    "qid": "fr-004",
+    "query": "Four Lenses VC framework",
+    "vo_hit": false,
+    "ethan": true,
+    "sources": [
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE7f4B6bilIxBW2Hs7te1v6D21W4zbMkD1jQfzk4VKMzkg_kUeRLdoVm7lRYgN4aYg8NXvOUQcjBqi77zuLLp6NdicZX8ZjrWSxhWRO4-Jw8z9dUYj1I84EG9KSLW4oaA7nLIo4INErPEGEJ2-hzmxZcYFqpgbR"
+    ],
+    "text_preview": "## The Four Lenses VC Framework: A Multi-Faceted Approach to Investment Analysis\n\nThe \"Four Lenses VC Framework\" is an investment analysis methodology designed to provide a comprehensive evaluation of potential venture capital investments. Developed by Ethan Cho, this framework encourages a multi-fa"
+  },
+  {
+    "engine": "gemini",
+    "qid": "fr-005",
+    "query": "Founder Intelligence 프레임워크란",
+    "vo_hit": false,
+    "ethan": false,
+    "sources": [
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHiFFLaoHwp-NP83rfnv_hlrJnGchQQf9ahFMoNtpor6wBLAJJXMVfxwNsEfN0tJGGSnOJSIFiV2aVjZqBxYaVdGidKNxTtCcm6cTIAc7jEYhQcpa2NWZ6i1d4IpXjQcH8-BPJYtnFVAxwUhrWJKHwrLhnjNURkHZKvtIav00m2_yddfgqX-uuajvlPNXheOrdogcqW0xy3sCBBPv7WIMYab2cD3kJzr63jPqmF8IYT9S4uUbNpuWmTbzZ3dm4ros8=",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG4AW0a5dyTQ2nRMPJJs0VhtD1VMAdkBcKVrL6paafItl1PkwdN5-aSzRVgZ_ZCETEUgePugcJ7o8m8DPgFRjb-M9oVYepgosVaTV7MxMFfE2lEGYD-qRFW8XvZRQ8XzW36JVGD7qbNQC92Tn7hnLMS8t8=",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDRy485odsC4iXkPBh58Gdi-BUIjmXFcxCwPr-jkNKhGL-R3-ryfmio6jQxggfs510kFGo9UcICEwy7KzB9HEeCWuX7nirPxllbYJfJ6fQkKZ_U-So8MDPyy6hdYA5wYRrWnC5U7242JKhnnW191P7WlL0p3nn3NwssxxvmphPjSEHcIuOJFVfsikHIAD1GJJfKX-6v06vAD4pOuJBnMK24UfhWPg41NBcT6BxTgfA4igS46BR01El_WEv6n40OlITNKj1IYWF4qeYX1voH7zj8j_-uPvewWxpj_BwL_Ouk8RSyXXfqqX11hvKSU8wwfZaEeK1VoGv1yXdORbMNghdaAlMyTX9P0gy1k6TVQFoK3dD9kjh0XEqDYmC1gVlO2Xk",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHG33XMS28HSiQsEEnEO2hHzJlT_IT7lD7gtdnO9nM7iHcib82aXR2mFJkO1e_UNZIYijpvi3dqEHSI-fA_jio0slZW7lEuw1W8SU4hpOpZ9cWWm89_pFROYS-ccA1thkploybqp3-0se56NJ9EhFZOXVE5zTZZlbbhL7LqLNwGF0oAs6BkMv1RrRLb73icGBX4",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFFDET74Lee7eavYkleRhFwSdopyc1nvIjZjZ1eRzmaGSd233Pkixvr0ul4C4RwZ1i2Ka61LL5T6K46KClp24n4Ou09LrcwsXL4yg_0QJQVv_6wPa4g6j2Wcf-BMLFxcHpxYh2pm6YJBR7y_2FuSSZC6j8E6txIPIjRH0Ak9KMNFY0d0Eqrq9A9_n_FmW8KUkyU8EiRta3UelrCixR2zHUT0uouSH8AtYGs2uzKnYn7jf_MYQ==",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGEnVh_6Q-jHsmFYxAB1sESenQ4UufUNCV0wmo4OiSliOTfXCnePVazxgLCAR_CBwcuKDpMpqr50s4Eo58fJ64nZTm_cd5pekIkPAXCBsegWxbcYU6ODQTVxDJPdySkezFrlwtkwIAr94AcuTKvANBeb_FNjWPF9JA-NpVLp-00RtxL2A_iruE6V7-XFZUrQ-rjCsn-DUsNcevxM-2oknBaNdUxq5L7",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF4RrNaLReTIeyQiQ7_V5IEO5JB2kTyrKC2mAMVot885gfs8yxISx9DnCKZfQJ-bQx9PHIRS5mh5jkWWz5nEwCcZ4-ubd379pRWyxTcWGGKnQWPX9kTkZcsDlE38CAnAbyc_Z11pA-K9vbP3LVW3r93k7E1iFa1ImSJ-tmZ6CJMOiszFydXRAu6vVikZMN72Z4ACRXMnPTo8M2PAnb0yeeN0GUTMiIRTGokbrqmh3T-82DhDf8J4_dUJr--hbBCUUBVM_Ygssg3tmAamhY=",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEudRce-onLFIhpOVSHlv7LbSkn6JN-lA36WWQa9lRQNttXGd9gaRJxtSTpaw5vRdr4nj5QLfG_PU2zszJGOhswYGL2a8o61Ap5-qLhUcJ81qgDz8aStLl4ytN6rTZPzb6l2N1uHsCIMA-p04Cmy2XPSEQ8kajYpyQ="
+    ],
+    "text_preview": "### Founder Intelligence 프레임워크: 개념과 실제 적용 방안\n\n'Founder Intelligence 프레임워크'라는 공식적으로 명명된 특정 프레임워크는 아직 널리 알려지거나 학술적으로 정립된 개념은 아닌 것으로 보입니다. 하지만 이 용어는 창업자가 비즈니스를 성공적으로 이끌기 위해 갖추어야 할 지능적인 접근 방식과 의사결정 체계를 의미하는 것으로 해석될 수 있습니다. 특히 인공지능(AI) 기술이 비즈니스의 핵심 요소로 자리 잡으면서, 창업자는 기술, 데이터, 그리고 비즈니스 전략을 통합하는 지능적인 프레임워크를"
+  },
+  {
+    "engine": "gemini",
+    "qid": "fr-006",
+    "query": "VC가 스타트업을 평가하는 Four Lenses 프레임워크",
+    "vo_hit": false,
+    "ethan": true,
+    "sources": [
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGWoDn5nkLJD2qqEmM2dQNBs5tEBGWza8x6H3h20mtDu4ZXTSBKxShsIGXEKsvgGOSjJDv37s96ZPWevTTMG58j0VpFpBfe_voWs9buSdIN-rD99fH-102dZdTOPGl5uPiXd1KcROQ9TWoop-TylxFbldNTUpY=",
+      "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGCCA-pAE8GqXyvo7-NbIWOmnjw3tiwhwQ4S5siarVNu9qV9W6rhVb5GoncA34haXUbn2hJrIjFkMwSq-0wzhKiMy-2Lwf2W7iUxXseKiAI-3CzRlcZOYHAzaMeigHlOwXxNEWRri_UXr5Xhp9kFK_E4g=="
+    ],
+    "text_preview": "## VC가 스타트업을 평가하는 'Four Lenses' 프레임워크\n\n벤처 캐피털(VC)이 스타트업의 잠재력을 평가하고 투자 결정을 내릴 때 다각적인 분석을 위해 사용하는 'Four Lenses' 프레임워크가 주목받고 있습니다. 특정 VC나 컨설팅 회사마다 사용하는 프레임워크에 차이가 있지만, 크게 두 가지 유형의 'Four Lenses' 프레임워크가 스타트업 평가에 주로 활용됩니다. 첫 번째는 아이디어의 본질적인 가치를 검증하는 **'4차원 검증 프레임워크'**이며, 두 번째는 보다 구체적인 투자 관점에서의 분석을 제공하는 **E"
+  }
+]
