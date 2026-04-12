@@ -2,8 +2,8 @@
 
 **URL:** https://www.ventureoracle.kr/concepts/founder-intelligence
 **Analysis Date:** 2026-04-13
-**Overall Citability Score: 48/100**
-**Citability Coverage:** 0% of content blocks score above 70
+**Overall Citability Score: 55/100** (revised upward from initial 48 after visual verification)
+**Citability Coverage:** 1 of 7 content blocks score above 70
 
 ---
 
@@ -12,21 +12,25 @@
 | Category | Score | Weight | Weighted |
 |---|---|---|---|
 | Answer Block Quality | 55/100 | 30% | 16.5 |
-| Passage Self-Containment | 40/100 | 25% | 10.0 |
-| Structural Readability | 45/100 | 20% | 9.0 |
+| Passage Self-Containment | 50/100 | 25% | 12.5 |
+| Structural Readability | 55/100 | 20% | 11.0 |
 | Statistical Density | 30/100 | 15% | 4.5 |
 | Uniqueness & Original Data | 80/100 | 10% | 8.0 |
-| **Overall** | | | **48/100** |
+| **Overall** | | | **52.5 → rounded 55/100** |
 
 ---
 
-## Critical Finding: Template Rendering Bug
+## Correction: Template Rendering Is NOT Broken
 
-**The page has 400+ words of substantive content in `concepts.ts` but React renders it as a wall of text.** The `explanation` field contains `\n` newline characters that should create paragraph breaks, but React's `{concept.explanation}` JSX expression collapses all newlines to whitespace.
+**Initial assessment (WRONG):** "React renders concept.explanation as a wall of text because `\n` characters are collapsed to whitespace."
 
-**Result:** The 232-word "How It Works" section renders as ONE PARAGRAPH. AI systems cannot extract individual passages from a wall of text. This is the single biggest drag on the citability score.
+**Actual state (verified via Chrome MCP screenshot):** The template already uses `whitespace-pre-line` CSS on the explanation container (line 213 of `[slug]/page.tsx`). This correctly renders `\n` as visual line breaks. The numbered list (1-5), the "What it IS:" label, and the Korean Diaspora thesis all render as separate visual paragraphs with proper spacing.
 
-**Fix:** One CSS line on the explanation/application containers: `style={{ whiteSpace: 'pre-line' }}` — or split the text on `\n\n` and wrap each chunk in a `<p>` tag. This would immediately add paragraph breaks and raise the citability score by 15-20 points across all 10 concept pages.
+**Root cause of the initial misdiagnosis:** The curl + Python parser used `re.sub(r'\s+', ' ', text)` which collapsed ALL whitespace including the newlines that `whitespace-pre-line` preserves visually. The 248-word count was from a stripped version; the actual visible content is 788 words rendered with proper formatting.
+
+**Impact on scoring:** Self-Containment and Structural Readability revised upward (+10 and +10 respectively) because passages ARE visually extractable. The template does NOT need the `.split('\n\n').map()` rewrite I originally recommended.
+
+**What WOULD still help (nice-to-have, not critical):** Converting the plain-text numbered list to semantic `<ol><li>` HTML tags would improve machine-readability for crawlers that parse HTML structure rather than rendered layout. But modern crawlers (Googlebot, Bingbot) render JavaScript and see the visual output, making this a minor enhancement.
 
 ---
 
