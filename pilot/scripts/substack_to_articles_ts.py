@@ -395,6 +395,11 @@ def fetch_substack_posts(feed_url: str) -> list[SubstackPost]:
         if not html:
             html = entry.get("summary", "")
         markdown_body = md(html, heading_style="ATX", strip=["script", "style"]).strip()
+        # Strip Substack CDN image transformation tokens ($s_!XXXX!,) that
+        # break when served from a non-substack domain. The URLs work fine
+        # without these tokens — they're optimization hints for the substack
+        # delivery context only.
+        markdown_body = re.sub(r'\$s_![^,]*!,', '', markdown_body)
         lang = detect_language(title + " " + markdown_body[:500])
         url_tail = urlparse(url).path.strip("/").split("/")[-1] or "post"
 
