@@ -343,23 +343,47 @@ def clean_slug(text: str, fallback: str) -> str:
     return slug[:60]
 
 
-def compute_excerpt(markdown: str, length: int = 220) -> str:
-    """Extract first paragraph-ish, stripped of markdown noise, up to N chars."""
-    # Strip headings, images, links, emphasis
+def compute_excerpt(markdown: str, min_length: int = 80, max_length: int = 250) -> str:
+    """Extract a clean excerpt from markdown content, skipping images,
+    blockquotes, headings, and other formatting. Takes enough paragraphs
+    to reach min_length, truncates at max_length on a word boundary."""
     text = markdown
-    text = re.sub(r"!\[.*?\]\(.*?\)", "", text)  # images
-    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)  # links
-    text = re.sub(r"^#+\s*", "", text, flags=re.MULTILINE)  # headings
-    text = re.sub(r"[*_`]+", "", text)  # emphasis + code
-    # First non-empty paragraph
-    paragraphs = [p.strip() for p in text.split("\n\n") if p.strip()]
+    # Strip markdown images (including linked images and empty-alt images)
+    text = re.sub(r"\[!\[.*?\]\(.*?\)\]\(.*?\)", "", text)  # linked images
+    text = re.sub(r"!\[.*?\]\(.*?\)", "", text)  # regular images
+    text = re.sub(r"\[\]\([^)]+\)", "", text)  # empty-alt images
+    # Strip blockquote markers
+    text = re.sub(r"^>\s*", "", text, flags=re.MULTILINE)
+    # Strip headings
+    text = re.sub(r"^#+\s*", "", text, flags=re.MULTILINE)
+    # Strip bold/italic/code markers
+    text = re.sub(r"[*_`]+", "", text)
+    # Strip links but keep text
+    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)
+    # Strip horizontal rules
+    text = re.sub(r"^---+$", "", text, flags=re.MULTILINE)
+    # Collapse whitespace
+    text = re.sub(r"\n{2,}", "\n\n", text)
+    text = re.sub(r"  +", " ", text)
+    # Find substantive paragraphs (>15 chars, not just whitespace)
+    paragraphs = [p.strip() for p in text.split("\n\n") if p.strip() and len(p.strip()) > 15]
     if not paragraphs:
         return ""
-    first = paragraphs[0]
-    if len(first) <= length:
-        return first
-    truncated = first[:length].rsplit(" ", 1)[0]
-    return truncated + "…"
+    # Take paragraphs until we reach min_length
+    result = ""
+    for p in paragraphs[:4]:
+        if len(result) >= min_length:
+            break
+        if result:
+            result += " "
+        result += p
+    # Truncate at word boundary if too long
+    if len(result) > max_length:
+        result = result[:max_length].rsplit(" ", 1)[0] + "…"
+    # Clean up any remaining formatting artifacts
+    result = result.replace("\\n", " ")
+    result = re.sub(r"\s+", " ", result).strip()
+    return result
 
 
 def format_date(dt: datetime) -> str:
