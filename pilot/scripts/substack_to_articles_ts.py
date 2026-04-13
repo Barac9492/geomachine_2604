@@ -147,6 +147,13 @@ OVERRIDES: dict[str, dict[str, str]] = {
         "slug": "ventureoracle-001-hormuz-oil-lag",
         "category": "Predictions",
     },
+    # 호르무즈에서 가장 겁에 질린 두 사람은 테헤란에 없다 (2026-04-12/13)
+    # Follow-up to VentureOracle #001 — Hormuz crisis geopolitical analysis.
+    "5de": {
+        "title": "The Two Most Frightened People at Hormuz Are Not in Tehran",
+        "slug": "hormuz-frightened-not-in-tehran",
+        "category": "Predictions",
+    },
 }
 
 STOPWORDS = {

@@ -1,13 +1,13 @@
 # Substack → VentureOracle articles.ts sync
 
-Generated: 2026-04-12T09:34:17
+Generated: 2026-04-13T09:01:43
 Source feed: https://ethancho12.substack.com/feed
-Existing articles.ts: /tmp/voracle-substack-integration/ventureoracle-site/app/data/articles.ts
+Existing articles.ts: /tmp/voracle-new-post/ventureoracle-site/app/data/articles.ts
 
 ## Summary
 
 - **Substack posts fetched**: 20
-- **Existing articles in articles.ts**: 30
+- **Existing articles in articles.ts**: 31
 - **Substack posts already correctly linked**: 17
 - **Substack posts needing canonical URL fix on existing articles**: 0
 - **Alt-language siblings (manual decision required)**: 2
@@ -42,4 +42,4 @@ Existing articles.ts: /tmp/voracle-substack-integration/ventureoracle-site/app/d
 
 | Date | Language | Words | Title | Slug |
 |---|---|---|---|---|
-| 2026-04-12 | ko | 1048 | VentureOracle #001: The Hormuz Oil Lag | `ventureoracle-001-hormuz-oil-lag` |
+| 2026-04-12 | ko | 666 | The Two Most Frightened People at Hormuz Are Not in Tehran | `hormuz-frightened-not-in-tehran` |
