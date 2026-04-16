@@ -1,16 +1,16 @@
 # Substack → VentureOracle articles.ts sync
 
-Generated: 2026-04-13T09:01:43
+Generated: 2026-04-14T08:35:55
 Source feed: https://ethancho12.substack.com/feed
-Existing articles.ts: /tmp/voracle-new-post/ventureoracle-site/app/data/articles.ts
+Existing articles.ts: /tmp/voracle-lp-post/ventureoracle-site/app/data/articles.ts
 
 ## Summary
 
 - **Substack posts fetched**: 20
-- **Existing articles in articles.ts**: 31
-- **Substack posts already correctly linked**: 17
+- **Existing articles in articles.ts**: 32
+- **Substack posts already correctly linked**: 18
 - **Substack posts needing canonical URL fix on existing articles**: 0
-- **Alt-language siblings (manual decision required)**: 2
+- **Alt-language siblings (manual decision required)**: 1
 - **New substack posts (not yet in articles.ts)**: 1
 
 ## Output files
@@ -42,4 +42,4 @@ Existing articles.ts: /tmp/voracle-new-post/ventureoracle-site/app/data/articles
 
 | Date | Language | Words | Title | Slug |
 |---|---|---|---|---|
-| 2026-04-12 | ko | 666 | The Two Most Frightened People at Hormuz Are Not in Tehran | `hormuz-frightened-not-in-tehran` |
+| 2026-04-13 | en | 1444 | [LP] Asia’s Last Non-Competitive Venture Market | `lp-asias-last-non-competitive-venture-market` |

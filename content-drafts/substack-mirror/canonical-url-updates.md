@@ -1,15 +1,15 @@
 # Canonical URL health check for existing articles
 
 Source feed: https://ethancho12.substack.com/feed
-Existing articles.ts: /tmp/voracle-new-post/ventureoracle-site/app/data/articles.ts
-Generated: 2026-04-13T09:01:43
+Existing articles.ts: /tmp/voracle-lp-post/ventureoracle-site/app/data/articles.ts
+Generated: 2026-04-14T08:35:55
 
 ## Current state of canonical URLs across 17 articles
 
 - **0 articles** use the substack ROOT (`https://ethancho12.substack.com`).
   This is the SEO bug: every one of these claims the substack homepage as canonical,
   which dilutes the signal. These need per-post canonical URLs.
-- **23 articles** already use correct per-post substack canonicals.
+- **24 articles** already use correct per-post substack canonicals.
   Nothing to do for these.
 - **0 articles** are self-canonical (point at `ventureoracle.kr/insights/<slug>`).
   These are ventureoracle.kr-native content, never cross-posted on substack.
@@ -23,9 +23,10 @@ _6 substack-root articles don't have recent substack counterparts._
 
 ## Articles already with correct canonical URLs
 
-**17 articles are already correct** (exact URL match).
+**18 articles are already correct** (exact URL match).
 No action required.
 
+- `hormuz-frightened-not-in-tehran` → `https://ethancho12.substack.com/p/5de`
 - `ventureoracle-001-hormuz-oil-lag` → `https://ethancho12.substack.com/p/ventureoracle-001`
 - `koreas-13-billion-venture-market-has-a-body-composition-prob` → `https://ethancho12.substack.com/p/koreas-13-billion-venture-market`
 - `for-non-korean-lps-why-korea-is-the-most-mispriced-startup-m` → `https://ethancho12.substack.com/p/for-non-korean-lps-why-korea-is-the`
@@ -46,7 +47,7 @@ No action required.
 
 ## Alt-language siblings (Korean/English pairs)
 
-**2 substack posts** fuzzy-matched to existing articles
+**1 substack posts** fuzzy-matched to existing articles
 that already have a correct per-post substack canonical for the OTHER
 language version. These are effectively translated siblings. Three options:
 
@@ -59,7 +60,6 @@ language version. These are effectively translated siblings. Three options:
 | Sibling post URL | Paired with article | Pair existing URL |
 |---|---|---|
 | `https://ethancho12.substack.com/p/the-optimism-tax-what-18-billion` | `the-optimism-tax` | `https://ethancho12.substack.com/p/the-optimism-tax` |
-| `https://ethancho12.substack.com/p/openai-9` | `openai-hardware-dilemma` | `https://ethancho12.substack.com/p/openais-65-billion-hardware-dilemma` |
 
 ## Substack-root articles without a detected match
 
